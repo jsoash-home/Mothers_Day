@@ -1,0 +1,2599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Happy Mother's Day</title>
+
+<!-- Fonts: distinctive calligraphic display + elegant serif -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Italianno&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  /* =========================================================
+     ROOT THEME — blush + cream + gold maximalist
+     ========================================================= */
+  :root {
+    --cream:       #fdf6ec;
+    --cream-warm:  #fbeede;
+    --blush:       #ffe4e8;
+    --blush-deep:  #ffc8d3;
+    --rose:        #d4719c;
+    --rose-deep:   #a84968;
+    --rose-dark:   #7a2f4c;
+    --gold:        #d4af37;
+    --gold-light:  #f4e4a1;
+    --gold-deep:   #a8821a;
+    --burgundy:    #5c1f3c;
+    --white:       #ffffff;
+
+    --shadow-soft: 0 10px 40px rgba(122, 47, 76, 0.18);
+    --shadow-deep: 0 20px 60px rgba(122, 47, 76, 0.30);
+    --shadow-gold: 0 0 30px rgba(212, 175, 55, 0.4);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+    color: var(--burgundy);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 18px;
+    background:
+      radial-gradient(ellipse at top left,    var(--blush) 0%, transparent 55%),
+      radial-gradient(ellipse at bottom right, var(--cream-warm) 0%, transparent 60%),
+      radial-gradient(ellipse at center,      #fff5e8 0%, var(--cream) 70%);
+    background-attachment: fixed;
+  }
+
+  /* Subtle paper grain overlay for warmth */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.35;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.95 0 0 0 0 0.85 0 0 0 0 0.75 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    z-index: 1;
+  }
+
+  /* =========================================================
+     FLOATING BACKGROUND DECORATIONS — petals & sparkles
+     ========================================================= */
+  #decorations {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+    overflow: hidden;
+  }
+
+  .petal, .sparkle, .heart {
+    position: absolute;
+    top: -10vh;
+    will-change: transform;
+    opacity: 0;
+  }
+
+  .petal {
+    width: 28px; height: 28px;
+    animation: drift linear infinite;
+  }
+  .petal svg { width: 100%; height: 100%; }
+
+  .sparkle {
+    width: 14px; height: 14px;
+    color: var(--gold);
+    animation: drift-sparkle linear infinite;
+  }
+
+  .heart {
+    width: 22px; height: 22px;
+    color: var(--rose);
+    animation: drift linear infinite;
+  }
+
+  @keyframes drift {
+    0%   { transform: translate(0, 0) rotate(0deg);    opacity: 0; }
+    10%  { opacity: 0.85; }
+    90%  { opacity: 0.85; }
+    100% { transform: translate(var(--drift, 80px), 110vh) rotate(720deg); opacity: 0; }
+  }
+
+  @keyframes drift-sparkle {
+    0%   { transform: translate(0,0) scale(0.4); opacity: 0; }
+    20%  { opacity: 1; }
+    50%  { transform: translate(var(--drift, 40px), 55vh) scale(1.3); opacity: 1; }
+    80%  { opacity: 1; }
+    100% { transform: translate(calc(var(--drift, 40px) * 2), 110vh) scale(0.4); opacity: 0; }
+  }
+
+  /* =========================================================
+     APP / SCREEN STRUCTURE
+     ========================================================= */
+  #app {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    min-height: 100vh;
+  }
+
+  .screen {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.7s ease;
+    overflow-y: auto;
+  }
+  .screen.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* =========================================================
+     TYPOGRAPHY
+     ========================================================= */
+  .display-script {
+    font-family: 'Italianno', cursive;
+    font-weight: 400;
+    line-height: 0.9;
+    color: var(--rose-dark);
+    text-shadow:
+      2px 2px 0 var(--gold-light),
+      4px 4px 0 rgba(212, 175, 55, 0.3),
+      0 8px 30px rgba(168, 73, 104, 0.3);
+  }
+
+  .display-vibes {
+    font-family: 'Great Vibes', cursive;
+    font-weight: 400;
+    color: var(--rose-deep);
+  }
+
+  .serif-display {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  .label-tiny {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 14px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+  }
+
+  /* =========================================================
+     WELCOME SCREEN
+     ========================================================= */
+  #screen-welcome .ornament-line {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 18px;
+  }
+  #screen-welcome .ornament-line .line {
+    height: 1px;
+    width: 80px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  #screen-welcome h1.greeting {
+    font-size: clamp(72px, 16vw, 220px);
+    margin: 0;
+    animation: zoomShimmer 1.4s cubic-bezier(.2,.9,.3,1.4) both;
+  }
+  #screen-welcome h1.greeting .for {
+    display: block;
+    font-size: 0.32em;
+    color: var(--gold-deep);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: -10px;
+    text-shadow: none;
+    animation: fadeUp 1s 0.5s both;
+  }
+  #screen-welcome h1.greeting .mom {
+    display: block;
+    font-family: 'Great Vibes', cursive;
+    font-size: 1.05em;
+    color: var(--rose-deep);
+    margin-top: -20px;
+    animation: fadeUp 1s 1.0s both;
+  }
+
+  #screen-welcome .subtitle {
+    margin-top: 18px;
+    font-size: 22px;
+    font-style: italic;
+    color: var(--rose-dark);
+    max-width: 620px;
+    text-align: center;
+    animation: fadeUp 1s 1.4s both;
+  }
+
+  @keyframes zoomShimmer {
+    0%   { transform: scale(0.6) rotate(-2deg); opacity: 0; filter: blur(8px); }
+    60%  { transform: scale(1.05) rotate(0.5deg); opacity: 1; filter: blur(0); }
+    100% { transform: scale(1) rotate(0); opacity: 1; }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* =========================================================
+     BIG ORNATE BUTTON
+     ========================================================= */
+  .btn-grand {
+    margin-top: 36px;
+    padding: 22px 56px;
+    border: none;
+    border-radius: 999px;
+    background: linear-gradient(135deg, var(--rose) 0%, var(--rose-deep) 50%, var(--rose-dark) 100%);
+    color: var(--white);
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-style: italic;
+    font-size: 22px;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    box-shadow:
+      0 0 0 3px var(--cream),
+      0 0 0 5px var(--gold),
+      var(--shadow-deep),
+      inset 0 2px 0 rgba(255,255,255,0.3);
+    transition: transform 0.3s cubic-bezier(.2,.9,.3,1.4), box-shadow 0.3s;
+    position: relative;
+    animation: pulseBtn 2.5s ease-in-out infinite, fadeUp 1s 1.8s both;
+    text-transform: uppercase;
+  }
+  .btn-grand:hover {
+    transform: translateY(-4px) scale(1.04);
+    box-shadow:
+      0 0 0 3px var(--cream),
+      0 0 0 5px var(--gold),
+      0 30px 70px rgba(122, 47, 76, 0.45),
+      var(--shadow-gold),
+      inset 0 2px 0 rgba(255,255,255,0.3);
+  }
+  .btn-grand:active { transform: translateY(-1px) scale(1.0); }
+
+  .btn-grand::before {
+    content: "✦";
+    position: absolute;
+    left: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gold-light);
+    font-size: 18px;
+  }
+  .btn-grand::after {
+    content: "✦";
+    position: absolute;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gold-light);
+    font-size: 18px;
+  }
+
+  @keyframes pulseBtn {
+    0%, 100% { box-shadow:
+      0 0 0 3px var(--cream),
+      0 0 0 5px var(--gold),
+      var(--shadow-deep),
+      inset 0 2px 0 rgba(255,255,255,0.3); }
+    50%      { box-shadow:
+      0 0 0 3px var(--cream),
+      0 0 0 5px var(--gold),
+      0 25px 60px rgba(122, 47, 76, 0.4),
+      0 0 40px rgba(212, 175, 55, 0.5),
+      inset 0 2px 0 rgba(255,255,255,0.3); }
+  }
+
+  /* =========================================================
+     GIFT SCREENS — shared layout
+     ========================================================= */
+  .gift-screen { gap: 14px; }
+
+  .gift-counter {
+    margin-bottom: 6px;
+  }
+
+  .gift-title {
+    font-size: clamp(54px, 8vw, 110px);
+    margin: 0;
+    text-align: center;
+  }
+
+  .gift-instruction {
+    font-size: 18px;
+    font-style: italic;
+    color: var(--rose-dark);
+    margin-top: -4px;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .reveal-stage {
+    width: min(420px, 92vw);
+    aspect-ratio: 4/5;
+    position: relative;
+    margin: 8px auto;
+  }
+
+  /* The visible reward beneath the cover */
+  .reward {
+    position: absolute;
+    inset: 0;
+    border-radius: 18px;
+    overflow: hidden;
+    background: var(--white);
+    box-shadow: var(--shadow-deep);
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ===== PHOTO PLACEHOLDER =====
+     Replace .photo-placeholder div with: <img src="path/to/photo.jpg" alt="Gift" class="photo">
+     ============================== */
+  .photo-placeholder, .photo {
+    flex: 1;
+    width: 100%;
+    object-fit: cover;
+    background:
+      repeating-linear-gradient(45deg,
+        var(--blush) 0 20px,
+        var(--blush-deep) 20px 40px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--rose-dark);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 20px;
+    text-align: center;
+    padding: 24px;
+  }
+  .photo-placeholder::before {
+    content: "🌷";
+    font-size: 64px;
+    position: absolute;
+    opacity: 0.6;
+  }
+  .photo-placeholder span {
+    position: relative;
+    z-index: 2;
+    background: rgba(255,255,255,0.85);
+    padding: 8px 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  }
+
+  /* Inline SVG illustration container — used for Gift 1 */
+  .photo-illustration {
+    flex: 1;
+    width: 100%;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--cream) 0%, var(--cream-warm) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .photo-illustration svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  /* Real product photos inside .photo-illustration — show whole image, don't crop */
+  .photo-illustration img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 16px;
+  }
+
+  /* The label strip beneath the photo */
+  .gift-caption-strip {
+    background: linear-gradient(135deg, var(--cream) 0%, var(--gold-light) 100%);
+    padding: 20px 24px;
+    border-top: 3px double var(--gold);
+    text-align: center;
+  }
+  .gift-caption-strip .gift-label {
+    font-family: 'Italianno', cursive;
+    font-size: 42px;
+    line-height: 1;
+    color: var(--rose-dark);
+    margin-bottom: 4px;
+  }
+  .gift-caption-strip .gift-sublabel {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 14px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+  }
+
+  /* =========================================================
+     SCRATCH CARD (Gift 1)
+     ========================================================= */
+  .scratch-canvas {
+    position: absolute;
+    inset: 0;
+    border-radius: 18px;
+    cursor: crosshair;
+    touch-action: none;
+    z-index: 5;
+    transition: opacity 0.8s ease;
+  }
+  .scratch-canvas.fading {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .scratch-hint {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 6;
+    color: var(--burgundy);
+    text-align: center;
+    transition: opacity 0.5s ease;
+  }
+  .scratch-hint.faded { opacity: 0; }
+  .scratch-hint .icon {
+    font-size: 48px;
+    margin-bottom: 8px;
+    animation: wiggle 1.6s ease-in-out infinite;
+  }
+  .scratch-hint .text {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 16px;
+  }
+  @keyframes wiggle {
+    0%, 100% { transform: rotate(-15deg) translateX(-8px); }
+    50%      { transform: rotate(15deg)  translateX(8px); }
+  }
+
+  /* =========================================================
+     WRAPPED PRESENT (Gift 2)
+     ========================================================= */
+  .present-stage {
+    width: min(360px, 80vw);
+    aspect-ratio: 1/1.1;
+    position: relative;
+    margin: 12px auto 24px;
+    cursor: pointer;
+    perspective: 800px;
+  }
+
+  .present {
+    position: absolute;
+    inset: 0;
+    transition: transform 0.4s ease;
+  }
+  .present-stage:hover:not(.opened) .present {
+    transform: scale(1.04) rotate(-2deg);
+  }
+
+  .box-bottom, .box-lid, .ribbon-v, .ribbon-h, .ribbon-lid, .bow {
+    position: absolute;
+  }
+
+  .box-bottom {
+    left: 8%;
+    right: 8%;
+    bottom: 0;
+    height: 65%;
+    background: linear-gradient(135deg, var(--rose) 0%, var(--rose-deep) 100%);
+    border-radius: 6px;
+    box-shadow:
+      var(--shadow-deep),
+      inset 0 -10px 30px rgba(0,0,0,0.2),
+      inset 6px 0 20px rgba(255,255,255,0.15);
+  }
+
+  .ribbon-v {
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    width: 14%;
+    height: 65%;
+    background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 50%, var(--gold-deep) 100%);
+    box-shadow:
+      inset 2px 0 4px rgba(255,255,255,0.4),
+      inset -2px 0 4px rgba(0,0,0,0.2);
+  }
+
+  .box-lid {
+    left: 4%;
+    right: 4%;
+    top: 22%;
+    height: 18%;
+    background: linear-gradient(135deg, var(--rose-deep) 0%, var(--rose-dark) 100%);
+    border-radius: 6px;
+    box-shadow:
+      0 8px 20px rgba(0,0,0,0.2),
+      inset 0 -4px 10px rgba(0,0,0,0.2),
+      inset 6px 0 20px rgba(255,255,255,0.15);
+    transform-origin: center bottom;
+    transition: transform 1.2s cubic-bezier(.5,-0.3,.5,1.3), opacity 1.5s ease;
+  }
+
+  .ribbon-lid {
+    left: 50%;
+    transform: translateX(-50%);
+    top: 22%;
+    width: 14%;
+    height: 18%;
+    background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 50%, var(--gold-deep) 100%);
+    box-shadow:
+      inset 2px 0 4px rgba(255,255,255,0.4),
+      inset -2px 0 4px rgba(0,0,0,0.2);
+    transition: transform 1.2s cubic-bezier(.5,-0.3,.5,1.3), opacity 1.5s ease;
+  }
+
+  .bow {
+    top: 0;
+    left: 50%;
+    width: 50%;
+    height: 26%;
+    transform: translateX(-50%);
+    transition: transform 1.4s cubic-bezier(.5,-0.5,.5,1.5), opacity 1.5s ease;
+  }
+
+  .bow svg {
+    width: 100%; height: 100%;
+    filter: drop-shadow(0 6px 14px rgba(168, 130, 26, 0.5));
+  }
+
+  /* OPENED state animations */
+  .present-stage.opened .bow {
+    transform: translateX(-50%) translateY(-180%) rotate(540deg) scale(0.4);
+    opacity: 0;
+  }
+  .present-stage.opened .box-lid {
+    transform: translateY(-220%) rotate(-25deg);
+    opacity: 0;
+  }
+  .present-stage.opened .ribbon-lid {
+    transform: translateX(-50%) translateY(-220%) rotate(-25deg);
+    opacity: 0;
+  }
+
+  /* The reveal that bursts out of the present */
+  .present-reveal {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    opacity: 0;
+    transform: scale(0.3);
+    transition: transform 1s cubic-bezier(.2,.9,.3,1.4) 0.5s, opacity 0.6s ease 0.5s;
+    z-index: 10;
+  }
+  .present-stage.opened .present-reveal {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* Light burst behind reveal */
+  .present-burst {
+    position: absolute;
+    inset: -20%;
+    background: radial-gradient(circle, rgba(255, 235, 180, 0.9) 0%, rgba(255, 200, 100, 0.4) 30%, transparent 65%);
+    opacity: 0;
+    transform: scale(0.2);
+    transition: opacity 0.8s ease 0.3s, transform 1.2s ease 0.3s;
+    pointer-events: none;
+    z-index: 1;
+    border-radius: 50%;
+  }
+  .present-stage.opened .present-burst {
+    opacity: 1;
+    transform: scale(1.4);
+    animation: pulseBurst 2s ease-in-out infinite 1.2s;
+  }
+  @keyframes pulseBurst {
+    0%, 100% { transform: scale(1.3); opacity: 0.85; }
+    50%      { transform: scale(1.5); opacity: 1; }
+  }
+
+  .present-tap-hint {
+    margin-top: 16px;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    color: var(--rose-dark);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-size: 14px;
+    text-align: center;
+    animation: bounce 1.6s ease-in-out infinite;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-6px); }
+  }
+
+  /* The reveal card shown ABOVE the present after opening */
+  .gift2-reveal-card {
+    margin-top: 24px;
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+    transition: opacity 0.8s ease 1.4s, transform 0.8s cubic-bezier(.2,.9,.3,1.4) 1.4s;
+    pointer-events: none;
+  }
+  .gift2-reveal-card.show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+
+  /* =========================================================
+     CONTINUE BUTTON (appears after a reveal)
+     ========================================================= */
+  .btn-continue {
+    margin-top: 28px;
+    padding: 14px 36px;
+    border: 2px solid var(--gold);
+    border-radius: 999px;
+    background: var(--cream);
+    color: var(--rose-dark);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    box-shadow: var(--shadow-soft);
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+    transition: opacity 0.6s ease, transform 0.6s ease, background 0.3s, color 0.3s;
+  }
+  .btn-continue.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .btn-continue:hover {
+    background: var(--rose);
+    color: var(--white);
+    border-color: var(--rose-deep);
+  }
+
+  /* =========================================================
+     FINALE SCREEN
+     ========================================================= */
+  #screen-finale .finale-title {
+    font-size: clamp(80px, 18vw, 260px);
+    margin: 0;
+    text-align: center;
+  }
+  #screen-finale .finale-sub {
+    font-size: 26px;
+    font-style: italic;
+    color: var(--rose-dark);
+    margin-top: 8px;
+    text-align: center;
+    max-width: 700px;
+  }
+  #screen-finale .heart-big {
+    display: inline-block;
+    color: var(--rose);
+    animation: heartbeat 1.2s ease-in-out infinite;
+    transform-origin: center;
+  }
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    25%      { transform: scale(1.18); }
+    50%      { transform: scale(1); }
+    75%      { transform: scale(1.12); }
+  }
+
+  .btn-replay {
+    margin-top: 36px;
+    padding: 14px 32px;
+    border: 1px solid var(--gold);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--gold-deep);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 16px;
+    letter-spacing: 0.15em;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background 0.3s, color 0.3s;
+  }
+  .btn-replay:hover {
+    background: var(--gold);
+    color: var(--white);
+  }
+
+  /* =========================================================
+     CURTAIN REVEAL (Gift 3) — theatre curtains slide apart
+     ========================================================= */
+  .curtain-stage {
+    overflow: hidden;
+  }
+
+  .curtain {
+    position: absolute;
+    top: 0;
+    width: 51%;        /* 1% overlap so no seam shows */
+    height: 100%;
+    z-index: 5;
+    cursor: pointer;
+    background-color: var(--rose-deep);
+    background-image:
+      repeating-linear-gradient(to right,
+        rgba(0,0,0,0.30) 0px,
+        rgba(0,0,0,0.05) 6px,
+        rgba(255,255,255,0.10) 14px,
+        rgba(0,0,0,0.05) 22px,
+        rgba(0,0,0,0.30) 30px),
+      linear-gradient(180deg,
+        var(--rose-dark) 0%,
+        var(--rose-deep) 40%,
+        var(--rose-dark) 100%);
+    box-shadow: inset 0 -10px 30px rgba(0,0,0,0.4);
+    transition: transform 1.4s cubic-bezier(.55, 0, .25, 1);
+  }
+  .curtain.left  { left: 0;  border-right: 2px solid var(--gold); border-radius: 18px 0 0 18px; }
+  .curtain.right { right: 0; border-left:  2px solid var(--gold); border-radius: 0 18px 18px 0; }
+
+  .curtain-stage.opened .curtain.left  { transform: translateX(-105%); }
+  .curtain-stage.opened .curtain.right { transform: translateX( 105%); }
+
+  /* Gold curtain rod across the top */
+  .curtain-rod {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    height: 16px;
+    background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 50%, var(--gold-deep) 100%);
+    border-radius: 8px;
+    z-index: 7;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.35);
+  }
+  .curtain-rod::before, .curtain-rod::after {
+    content: "";
+    position: absolute;
+    top: -6px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 32% 32%, var(--gold-light), var(--gold-deep));
+    box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+  }
+  .curtain-rod::before { left: -10px; }
+  .curtain-rod::after  { right: -10px; }
+
+  .curtain-hint {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 6;
+    color: var(--gold-light);
+    text-align: center;
+    transition: opacity 0.5s ease;
+  }
+  .curtain-hint.faded { opacity: 0; }
+  .curtain-hint .icon {
+    font-size: 56px;
+    margin-bottom: 8px;
+    text-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    animation: wiggle 1.6s ease-in-out infinite;
+  }
+  .curtain-hint .text {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-size: 16px;
+    text-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  }
+
+  /* =========================================================
+     GIFT 4 — Press-and-hold-to-charge mechanic + extra fanfare
+     ========================================================= */
+  .grand-prize-banner {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 900;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    font-size: 14px;
+    margin-bottom: 4px;
+    background: linear-gradient(90deg, var(--gold-deep) 0%, var(--gold) 50%, var(--gold-deep) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: shimmerBanner 2s ease-in-out infinite;
+    text-align: center;
+  }
+  @keyframes shimmerBanner {
+    0%, 100% { opacity: 0.75; transform: scale(1); }
+    50%      { opacity: 1;    transform: scale(1.06); }
+  }
+
+  .gift4-title {
+    font-size: clamp(64px, 11vw, 140px) !important;
+  }
+
+  .drumroll {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--rose-dark);
+    text-align: center;
+    margin-top: -4px;
+    margin-bottom: 18px;
+  }
+  .drumroll .dot {
+    display: inline-block;
+    animation: drumrollDot 1.4s ease-in-out infinite;
+  }
+  .drumroll .dot:nth-child(2) { animation-delay: 0.2s; }
+  .drumroll .dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes drumrollDot {
+    0%, 80%, 100% { opacity: 0.3; transform: translateY(0); }
+    40%           { opacity: 1;   transform: translateY(-4px); }
+  }
+
+  /* The big CHARGE button overlay (covers the reveal) */
+  .charge-stage { /* reuses .reveal-stage */ }
+
+  .charge-button-wrap {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+      radial-gradient(circle at center, var(--rose-deep) 0%, var(--burgundy) 80%, #2a0818 100%);
+    border-radius: 18px;
+    overflow: hidden;
+    transition: opacity 0.7s ease 0.2s, transform 0.9s cubic-bezier(.2,.9,.3,1.4) 0.2s;
+  }
+
+  /* Sparkly burst pattern in the button background */
+  .charge-button-wrap::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 18% 22%, rgba(212,175,55,0.6) 0px, transparent 4px),
+      radial-gradient(circle at 78% 16%, rgba(212,175,55,0.6) 0px, transparent 3px),
+      radial-gradient(circle at 88% 72%, rgba(212,175,55,0.6) 0px, transparent 3px),
+      radial-gradient(circle at 22% 84%, rgba(212,175,55,0.6) 0px, transparent 4px),
+      radial-gradient(circle at 50% 8%,  rgba(244,228,161,0.5) 0px, transparent 3px),
+      radial-gradient(circle at 8%  50%, rgba(244,228,161,0.5) 0px, transparent 3px),
+      radial-gradient(circle at 92% 50%, rgba(244,228,161,0.5) 0px, transparent 3px),
+      radial-gradient(circle at 50% 92%, rgba(244,228,161,0.5) 0px, transparent 3px);
+    pointer-events: none;
+    animation: sparkleSpin 8s linear infinite;
+  }
+  @keyframes sparkleSpin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+
+  .charge-stage.exploded .charge-button-wrap {
+    opacity: 0;
+    transform: scale(2.4);
+    pointer-events: none;
+  }
+
+  .charge-instruction {
+    position: absolute;
+    top: 22px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: var(--gold-light);
+    text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    z-index: 7;
+  }
+
+  .charge-ring {
+    position: absolute;
+    width: 240px;
+    height: 240px;
+    pointer-events: none;
+    z-index: 6;
+    transform: rotate(-90deg);  /* start fill at 12 o'clock */
+  }
+  .charge-ring .ring-bg {
+    fill: none;
+    stroke: rgba(255,255,255,0.18);
+    stroke-width: 6;
+  }
+  .charge-ring .ring-fill {
+    fill: none;
+    stroke: url(#ringGrad);
+    stroke-width: 6;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.05s linear;
+    filter: drop-shadow(0 0 8px rgba(244, 228, 161, 0.8));
+  }
+
+  .charge-button {
+    position: relative;
+    z-index: 7;
+    width: 190px;
+    height: 190px;
+    border-radius: 50%;
+    border: 5px solid var(--gold);
+    background: radial-gradient(circle at 30% 30%, #ff8aab 0%, var(--rose) 50%, var(--rose-deep) 100%);
+    color: white;
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: 22px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-shadow: 0 3px 8px rgba(0,0,0,0.4);
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: none;
+    box-shadow:
+      0 0 30px rgba(255, 100, 150, 0.6),
+      inset 0 -12px 24px rgba(0,0,0,0.35),
+      inset 0 4px 12px rgba(255,255,255,0.45);
+    animation: chargeBtnPulse 1.6s ease-in-out infinite;
+    transition: transform 0.1s ease;
+  }
+  .charge-button:active { transform: scale(0.94); }
+  .charge-button.charging { animation: chargeBtnHold 0.6s ease-in-out infinite; }
+  @keyframes chargeBtnPulse {
+    0%, 100% { box-shadow:
+      0 0 30px rgba(255, 100, 150, 0.6),
+      inset 0 -12px 24px rgba(0,0,0,0.35),
+      inset 0 4px 12px rgba(255,255,255,0.45); }
+    50%      { box-shadow:
+      0 0 60px rgba(255, 100, 150, 0.95),
+      inset 0 -12px 24px rgba(0,0,0,0.35),
+      inset 0 4px 12px rgba(255,255,255,0.45); }
+  }
+  @keyframes chargeBtnHold {
+    0%, 100% { transform: scale(0.94); }
+    50%      { transform: scale(0.98); }
+  }
+
+  /* Full-screen flash on explosion */
+  .screen-flash {
+    position: fixed;
+    inset: 0;
+    background: white;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 9999;
+  }
+  .screen-flash.firing {
+    animation: flashFire 0.7s ease-out;
+  }
+  @keyframes flashFire {
+    0%   { opacity: 0; }
+    20%  { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
+  /* =========================================================
+     SOUND TOGGLE — fixed top-right, persists across screens
+     ========================================================= */
+  #sound-toggle {
+    position: fixed;
+    top: 14px;
+    right: 14px;
+    z-index: 100;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 1.5px solid var(--gold);
+    background: rgba(255, 250, 240, 0.92);
+    color: var(--burgundy);
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    transition: transform 0.2s, box-shadow 0.2s;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  #sound-toggle:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.18);
+  }
+
+  /* =========================================================
+     RESPONSIVE
+     ========================================================= */
+  @media (max-width: 480px) {
+    .btn-grand { padding: 18px 36px; font-size: 18px; }
+    #screen-welcome .subtitle { font-size: 18px; }
+    .gift-instruction { font-size: 16px; padding: 0 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- =========================================================
+     FLOATING DECORATIONS — petals, sparkles, hearts
+     (generated by JS into this container)
+     ========================================================= -->
+<div id="decorations"></div>
+
+<!-- Mute toggle (persists across all screens) -->
+<button id="sound-toggle" aria-label="Mute sounds" title="Toggle sounds">🔊</button>
+
+<!-- =========================================================
+     APP — four screens, only one visible at a time
+     ========================================================= -->
+<main id="app">
+
+  <!-- ============ SCREEN 1: WELCOME ============ -->
+  <section id="screen-welcome" class="screen active">
+    <div class="ornament-line">
+      <span class="line"></span>
+      <span class="label-tiny">May 10, 2026</span>
+      <span class="line"></span>
+    </div>
+
+    <h1 class="display-script greeting">
+      <span class="for">A celebration for</span>
+      Happy
+      <span class="mom">Mother's Day, Mom</span>
+    </h1>
+
+    <p class="subtitle">
+      Four little gifts await you, wrapped with all my love.
+      Tap below to begin&hellip;
+    </p>
+
+    <button class="btn-grand" id="btn-begin">Begin the Celebration</button>
+  </section>
+
+  <!-- ============ SCREEN 2: GIFT 1 — SCRATCH-OFF ============ -->
+  <section id="screen-gift-1" class="screen gift-screen">
+    <p class="label-tiny gift-counter">Gift One of Four</p>
+    <h2 class="display-vibes gift-title">A Little Surprise</h2>
+    <p class="gift-instruction">Scratch the gold to reveal what's inside&hellip;</p>
+
+    <div class="reveal-stage" id="scratch-stage">
+      <!-- The reward beneath the scratch layer -->
+      <div class="reward">
+        <!-- Gift 1 photo: save your chair image to images/gift-1.jpg next to this HTML file -->
+        <div class="photo-illustration">
+          <img src="images/gift-1.png" alt="A folding Adirondack chair" />
+        </div>
+        <div class="gift-caption-strip">
+          <!-- EDIT THIS TEXT for the real gift name -->
+          <div class="gift-label">Duraweather Folding Adirondack &amp; Table Set</div>
+          <div class="gift-sublabel">— for Camp firing! —</div>
+        </div>
+      </div>
+
+      <!-- The hint shown above the scratch canvas -->
+      <div class="scratch-hint" id="scratch-hint">
+        <div class="icon">👆✨</div>
+        <div class="text">Scratch Here</div>
+      </div>
+
+      <!-- The scratchable cover -->
+      <canvas class="scratch-canvas" id="scratch-canvas"></canvas>
+    </div>
+
+    <button class="btn-continue" id="btn-continue-1">Continue to Gift Two →</button>
+  </section>
+
+  <!-- ============ SCREEN 3: GIFT 2 — WRAPPED PRESENT ============ -->
+  <section id="screen-gift-2" class="screen gift-screen">
+    <p class="label-tiny gift-counter">Gift Two of Four</p>
+    <h2 class="display-vibes gift-title">The Big One</h2>
+    <p class="gift-instruction">Tap the present to unwrap it&hellip;</p>
+
+    <div class="present-stage" id="present-stage">
+      <div class="present-burst"></div>
+
+      <div class="present">
+        <div class="box-bottom"></div>
+        <div class="ribbon-v"></div>
+        <div class="box-lid"></div>
+        <div class="ribbon-lid"></div>
+        <div class="bow">
+          <!-- SVG bow — gold, ridiculous -->
+          <svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="bowGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%"   stop-color="#f4e4a1"/>
+                <stop offset="50%"  stop-color="#d4af37"/>
+                <stop offset="100%" stop-color="#a8821a"/>
+              </linearGradient>
+            </defs>
+            <!-- Left loop -->
+            <path d="M 100 50 Q 30 10, 20 50 Q 30 90, 100 50 Z" fill="url(#bowGrad)" stroke="#a8821a" stroke-width="2"/>
+            <!-- Right loop -->
+            <path d="M 100 50 Q 170 10, 180 50 Q 170 90, 100 50 Z" fill="url(#bowGrad)" stroke="#a8821a" stroke-width="2"/>
+            <!-- Center knot -->
+            <ellipse cx="100" cy="50" rx="14" ry="22" fill="url(#bowGrad)" stroke="#a8821a" stroke-width="2"/>
+            <!-- Highlights -->
+            <path d="M 35 45 Q 60 38, 85 48" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2" stroke-linecap="round"/>
+            <path d="M 115 48 Q 140 38, 165 45" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- What pops out of the box (a sparkle burst — the actual photo card appears below) -->
+      <div class="present-reveal">
+        <div style="font-size: 80px;">🌹</div>
+      </div>
+    </div>
+
+    <p class="present-tap-hint" id="present-hint">↑ Tap to unwrap ↑</p>
+
+    <!-- The real reveal card slides in below the present after opening -->
+    <div class="reveal-stage gift2-reveal-card" id="gift2-card">
+      <div class="reward">
+        <!-- ===== Stylized SUV illustration. To replace with a real photo, swap this whole .photo-illustration div for: <img class="photo" src="images/gift-2.jpg" alt=""> ===== -->
+        <div class="photo-illustration">
+          <svg viewBox="0 0 1000 800" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" aria-label="Three luxury SUVs: BMW X5, Porsche Cayenne, Audi Q5">
+            <defs>
+              <radialGradient id="suvBg" cx="50%" cy="38%" r="70%">
+                <stop offset="0%"   stop-color="#fff9ec"/>
+                <stop offset="60%"  stop-color="#fdf6ec"/>
+                <stop offset="100%" stop-color="#f4e4a1"/>
+              </radialGradient>
+              <linearGradient id="bodyBMW" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%"  stop-color="#2a4f7c"/>
+                <stop offset="55%" stop-color="#0d2540"/>
+                <stop offset="100%" stop-color="#020a1a"/>
+              </linearGradient>
+              <linearGradient id="bodyPorsche" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%"  stop-color="#f4f4f7"/>
+                <stop offset="55%" stop-color="#bcbcc0"/>
+                <stop offset="100%" stop-color="#6a6a6e"/>
+              </linearGradient>
+              <linearGradient id="bodyAudi" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%"  stop-color="#9a4060"/>
+                <stop offset="55%" stop-color="#5c1f3c"/>
+                <stop offset="100%" stop-color="#2a0a18"/>
+              </linearGradient>
+              <radialGradient id="wheelGrad" cx="50%" cy="50%" r="50%">
+                <stop offset="0%"  stop-color="#444"/>
+                <stop offset="65%" stop-color="#1a1a1a"/>
+                <stop offset="100%" stop-color="#000"/>
+              </radialGradient>
+              <linearGradient id="winGlass" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%"  stop-color="#3a3a3a"/>
+                <stop offset="100%" stop-color="#0a0a0a"/>
+              </linearGradient>
+              <filter id="carShadow" x="-15%" y="-15%" width="130%" height="140%">
+                <feGaussianBlur in="SourceAlpha" stdDeviation="5"/>
+                <feOffset dy="6" result="off"/>
+                <feComponentTransfer><feFuncA type="linear" slope="0.35"/></feComponentTransfer>
+                <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+
+            <!-- Background -->
+            <rect width="1000" height="800" fill="url(#suvBg)"/>
+
+            <!-- Decorative dotted gold border -->
+            <rect x="20" y="20" width="960" height="760" fill="none" stroke="#d4af37" stroke-width="2" stroke-dasharray="2 8" rx="12"/>
+            <rect x="32" y="32" width="936" height="736" fill="none" stroke="#d4af37" stroke-width="0.5" rx="8"/>
+
+            <!-- Top ornament line + label -->
+            <g>
+              <line x1="280" y1="90" x2="430" y2="90" stroke="#d4af37" stroke-width="1"/>
+              <line x1="570" y1="90" x2="720" y2="90" stroke="#d4af37" stroke-width="1"/>
+              <path d="M 437 85 L 442 90 L 437 95 L 432 90 Z" fill="#d4af37"/>
+              <path d="M 563 85 L 568 90 L 563 95 L 558 90 Z" fill="#d4af37"/>
+              <text x="500" y="96" text-anchor="middle" font-family="Playfair Display, Georgia, serif" font-style="italic" font-size="20" fill="#a8821a" letter-spacing="6">LUXURY SELECTION</text>
+            </g>
+
+            <!-- Headline in script -->
+            <text x="500" y="170" text-anchor="middle" font-family="Italianno, cursive" font-size="68" fill="#5c1f3c">three exquisite options</text>
+
+            <!-- ===================================================
+                 BMW X5 (deep navy, twin kidney grille)
+                 =================================================== -->
+            <g transform="translate(40, 290)" filter="url(#carShadow)">
+              <ellipse cx="140" cy="178" rx="135" ry="6" fill="rgba(0,0,0,0.25)"/>
+              <path d="M 15 130 L 15 100 Q 15 95 22 92 L 50 88 L 95 80 L 105 60 Q 110 45 130 42 L 175 42 Q 195 42 205 60 L 218 80 L 260 88 Q 270 92 270 100 L 270 130 Z"
+                    fill="url(#bodyBMW)" stroke="#020a1a" stroke-width="1"/>
+              <rect x="120" y="38" width="70" height="3" rx="1" fill="#1a1a1a"/>
+              <path d="M 115 78 L 122 50 L 175 50 L 195 78 Z" fill="url(#winGlass)"/>
+              <line x1="155" y1="50" x2="155" y2="78" stroke="#020a1a" stroke-width="3"/>
+              <path d="M 175 50 L 195 78 L 178 78 L 175 60 Z" fill="#0d2540"/>
+              <!-- Twin kidney grilles -->
+              <g transform="translate(20,100)">
+                <rect x="0"  y="0" width="11" height="20" rx="1.5" fill="#0a0a0a"/>
+                <rect x="13" y="0" width="11" height="20" rx="1.5" fill="#0a0a0a"/>
+                <line x1="3"  y1="2" x2="3"  y2="18" stroke="#666" stroke-width="0.5"/>
+                <line x1="6"  y1="2" x2="6"  y2="18" stroke="#666" stroke-width="0.5"/>
+                <line x1="9"  y1="2" x2="9"  y2="18" stroke="#666" stroke-width="0.5"/>
+                <line x1="16" y1="2" x2="16" y2="18" stroke="#666" stroke-width="0.5"/>
+                <line x1="19" y1="2" x2="19" y2="18" stroke="#666" stroke-width="0.5"/>
+                <line x1="22" y1="2" x2="22" y2="18" stroke="#666" stroke-width="0.5"/>
+              </g>
+              <path d="M 16 95 L 50 90 L 50 100 L 16 102 Z" fill="#f4e4a1" stroke="#d4af37" stroke-width="0.5"/>
+              <line x1="50" y1="88" x2="220" y2="90" stroke="#bbb" stroke-width="0.8"/>
+              <rect x="125" y="105" width="22" height="3" rx="1.5" fill="#999"/>
+              <rect x="170" y="105" width="22" height="3" rx="1.5" fill="#999"/>
+              <path d="M 30 115 Q 140 110 260 117" stroke="rgba(255,255,255,0.18)" stroke-width="3" fill="none"/>
+              <path d="M 252 92 L 268 95 L 268 102 L 252 100 Z" fill="#a84968"/>
+              <ellipse cx="60"  cy="135" rx="32" ry="22" fill="#020a1a"/>
+              <ellipse cx="220" cy="135" rx="32" ry="22" fill="#020a1a"/>
+              <g transform="translate(60, 140)">
+                <circle r="26" fill="#000"/>
+                <circle r="22" fill="url(#wheelGrad)"/>
+                <g stroke="#888" stroke-width="2.5" fill="none">
+                  <line x1="-18" y1="0"   x2="18"  y2="0"/>
+                  <line x1="0"   y1="-18" x2="0"   y2="18"/>
+                  <line x1="-13" y1="-13" x2="13"  y2="13"/>
+                  <line x1="-13" y1="13"  x2="13"  y2="-13"/>
+                </g>
+                <circle r="4" fill="#bbb"/>
+                <circle r="2" fill="#222"/>
+              </g>
+              <g transform="translate(220, 140)">
+                <circle r="26" fill="#000"/>
+                <circle r="22" fill="url(#wheelGrad)"/>
+                <g stroke="#888" stroke-width="2.5" fill="none">
+                  <line x1="-18" y1="0"   x2="18"  y2="0"/>
+                  <line x1="0"   y1="-18" x2="0"   y2="18"/>
+                  <line x1="-13" y1="-13" x2="13"  y2="13"/>
+                  <line x1="-13" y1="13"  x2="13"  y2="-13"/>
+                </g>
+                <circle r="4" fill="#bbb"/>
+                <circle r="2" fill="#222"/>
+              </g>
+            </g>
+
+            <!-- ===================================================
+                 PORSCHE CAYENNE (silver, sloping coupe rear)
+                 =================================================== -->
+            <g transform="translate(360, 290)" filter="url(#carShadow)">
+              <ellipse cx="140" cy="178" rx="138" ry="6" fill="rgba(0,0,0,0.25)"/>
+              <path d="M 12 130 L 12 105 Q 12 95 22 90 L 55 82 L 75 70 Q 85 50 110 48 L 170 48 Q 190 48 200 60 L 230 82 L 260 92 Q 268 100 268 115 L 265 130 Z"
+                    fill="url(#bodyPorsche)" stroke="#3a3a3d" stroke-width="1"/>
+              <path d="M 90 80 L 110 55 L 175 55 L 215 82 Z" fill="url(#winGlass)"/>
+              <line x1="150" y1="55" x2="150" y2="82" stroke="#3a3a3d" stroke-width="2.5"/>
+              <!-- Pronounced fender flares (Porsche signature) -->
+              <path d="M 195 105 Q 215 95 240 105 L 245 130 L 195 130 Z" fill="#9a9a9d"/>
+              <path d="M 35 105 Q 55 95 80 105 L 85 130 L 35 130 Z" fill="#9a9a9d"/>
+              <!-- Round quad headlights -->
+              <ellipse cx="22" cy="100" rx="9" ry="7" fill="#f4e4a1" stroke="#d4af37" stroke-width="0.5"/>
+              <ellipse cx="36" cy="100" rx="6" ry="5" fill="#f4e4a1" stroke="#d4af37" stroke-width="0.5"/>
+              <rect x="20" y="115" width="40" height="10" rx="2" fill="#1a1a1a"/>
+              <line x1="50" y1="92" x2="240" y2="95" stroke="#fff" stroke-width="0.8" opacity="0.6"/>
+              <rect x="115" y="100" width="20" height="3" rx="1.5" fill="#777"/>
+              <rect x="160" y="100" width="20" height="3" rx="1.5" fill="#777"/>
+              <path d="M 30 110 Q 140 105 260 115" stroke="rgba(255,255,255,0.45)" stroke-width="3" fill="none"/>
+              <!-- Connected light bar at rear -->
+              <rect x="245" y="92" width="22" height="3" rx="1" fill="#a84968"/>
+              <rect x="248" y="98" width="18" height="2" fill="#a84968" opacity="0.7"/>
+              <ellipse cx="60"  cy="135" rx="30" ry="22" fill="#1a1a1a"/>
+              <ellipse cx="220" cy="135" rx="30" ry="22" fill="#1a1a1a"/>
+              <!-- Turbine 5-spoke wheels -->
+              <g transform="translate(60, 140)">
+                <circle r="26" fill="#000"/>
+                <circle r="22" fill="url(#wheelGrad)"/>
+                <g fill="#999">
+                  <path d="M 0 -18 L 4 -8 L -4 -8 Z"/>
+                  <path d="M 0 -18 L 4 -8 L -4 -8 Z" transform="rotate(72)"/>
+                  <path d="M 0 -18 L 4 -8 L -4 -8 Z" transform="rotate(144)"/>
+                  <path d="M 0 -18 L 4 -8 L -4 -8 Z" transform="rotate(216)"/>
+                  <path d="M 0 -18 L 4 -8 L -4 -8 Z" transform="rotate(288)"/>
+                </g>
+                <circle r="5" fill="#bbb"/>
+                <circle r="2" fill="#222"/>
+              </g>
+              <g transform="translate(220, 140)">
+                <circle r="26" fill="#000"/>
+                <circle r="22" fill="url(#wheelGrad)"/>
+                <g fill="#999">
+                  <path d="M 0 -18 L 4 -8 L -4 -8 Z"/>
+                  <path d="M 0 -18 L 4 -8 L -4 -8 Z" transform="rotate(72)"/>
+                  <path d="M 0 -18 L 4 -8 L -4 -8 Z" transform="rotate(144)"/>
+                  <path d="M 0 -18 L 4 -8 L -4 -8 Z" transform="rotate(216)"/>
+                  <path d="M 0 -18 L 4 -8 L -4 -8 Z" transform="rotate(288)"/>
+                </g>
+                <circle r="5" fill="#bbb"/>
+                <circle r="2" fill="#222"/>
+              </g>
+            </g>
+
+            <!-- ===================================================
+                 AUDI Q5 (deep burgundy, hex single-frame grille)
+                 =================================================== -->
+            <g transform="translate(680, 290)" filter="url(#carShadow)">
+              <ellipse cx="140" cy="178" rx="135" ry="6" fill="rgba(0,0,0,0.25)"/>
+              <path d="M 15 130 L 15 100 Q 15 92 22 88 L 55 82 L 100 75 L 110 55 Q 115 45 135 45 L 180 45 Q 200 45 208 60 L 218 82 L 260 88 Q 270 92 270 100 L 270 130 Z"
+                    fill="url(#bodyAudi)" stroke="#2a0a18" stroke-width="1"/>
+              <rect x="120" y="42" width="80" height="2.5" rx="1" fill="#2a0a18"/>
+              <path d="M 115 80 L 125 52 L 195 52 L 215 80 Z" fill="url(#winGlass)"/>
+              <line x1="160" y1="52" x2="160" y2="80" stroke="#2a0a18" stroke-width="2.5"/>
+              <path d="M 115 80 L 125 52 L 195 52 L 215 80" stroke="#ddd" stroke-width="1" fill="none"/>
+              <!-- Singleframe hex grille -->
+              <path d="M 18 95 L 60 92 L 65 110 L 60 124 L 18 122 Z" fill="#0a0a0a" stroke="#888" stroke-width="0.8"/>
+              <line x1="22" y1="100" x2="60" y2="98"  stroke="#444" stroke-width="0.5"/>
+              <line x1="22" y1="105" x2="62" y2="103" stroke="#444" stroke-width="0.5"/>
+              <line x1="22" y1="110" x2="62" y2="108" stroke="#444" stroke-width="0.5"/>
+              <line x1="22" y1="115" x2="62" y2="113" stroke="#444" stroke-width="0.5"/>
+              <line x1="22" y1="120" x2="60" y2="118" stroke="#444" stroke-width="0.5"/>
+              <!-- Slim LED headlight -->
+              <path d="M 20 88 L 55 84 L 58 92 L 22 95 Z" fill="#f4e4a1" stroke="#d4af37" stroke-width="0.5"/>
+              <line x1="22" y1="89" x2="55" y2="86" stroke="#fff" stroke-width="1.5"/>
+              <line x1="50" y1="88" x2="220" y2="90" stroke="#cc8" stroke-width="0.8"/>
+              <rect x="130" y="105" width="20" height="3" rx="1.5" fill="#999"/>
+              <rect x="170" y="105" width="20" height="3" rx="1.5" fill="#999"/>
+              <path d="M 30 115 Q 140 110 260 117" stroke="rgba(255,255,255,0.2)" stroke-width="3" fill="none"/>
+              <rect x="245" y="93" width="22" height="4" rx="1" fill="#a84968"/>
+              <ellipse cx="60"  cy="135" rx="32" ry="22" fill="#2a0a18"/>
+              <ellipse cx="220" cy="135" rx="32" ry="22" fill="#2a0a18"/>
+              <!-- 5-arm flat spoke wheels -->
+              <g transform="translate(60, 140)">
+                <circle r="26" fill="#000"/>
+                <circle r="22" fill="url(#wheelGrad)"/>
+                <g fill="#aaa">
+                  <rect x="-2" y="-20" width="4" height="20"/>
+                  <rect x="-2" y="-20" width="4" height="20" transform="rotate(72)"/>
+                  <rect x="-2" y="-20" width="4" height="20" transform="rotate(144)"/>
+                  <rect x="-2" y="-20" width="4" height="20" transform="rotate(216)"/>
+                  <rect x="-2" y="-20" width="4" height="20" transform="rotate(288)"/>
+                </g>
+                <circle r="5" fill="#888"/>
+                <circle r="2" fill="#222"/>
+              </g>
+              <g transform="translate(220, 140)">
+                <circle r="26" fill="#000"/>
+                <circle r="22" fill="url(#wheelGrad)"/>
+                <g fill="#aaa">
+                  <rect x="-2" y="-20" width="4" height="20"/>
+                  <rect x="-2" y="-20" width="4" height="20" transform="rotate(72)"/>
+                  <rect x="-2" y="-20" width="4" height="20" transform="rotate(144)"/>
+                  <rect x="-2" y="-20" width="4" height="20" transform="rotate(216)"/>
+                  <rect x="-2" y="-20" width="4" height="20" transform="rotate(288)"/>
+                </g>
+                <circle r="5" fill="#888"/>
+                <circle r="2" fill="#222"/>
+              </g>
+            </g>
+
+            <!-- Brand badges -->
+            <g font-family="Playfair Display, serif" text-anchor="middle">
+              <g transform="translate(180, 555)">
+                <rect x="-65" y="-22" width="130" height="42" rx="21" fill="#fdf6ec" stroke="#d4af37" stroke-width="1.5"/>
+                <text y="-3" font-size="14" font-weight="700" fill="#0d2540" letter-spacing="3">BMW</text>
+                <text y="14" font-size="10" font-style="italic" fill="#a8821a" letter-spacing="2">— X5 —</text>
+              </g>
+              <g transform="translate(500, 555)">
+                <rect x="-78" y="-22" width="156" height="42" rx="21" fill="#fdf6ec" stroke="#d4af37" stroke-width="1.5"/>
+                <text y="-3" font-size="14" font-weight="700" fill="#3a3a3d" letter-spacing="3">PORSCHE</text>
+                <text y="14" font-size="10" font-style="italic" fill="#a8821a" letter-spacing="2">— Cayenne —</text>
+              </g>
+              <g transform="translate(820, 555)">
+                <rect x="-65" y="-22" width="130" height="42" rx="21" fill="#fdf6ec" stroke="#d4af37" stroke-width="1.5"/>
+                <text y="-3" font-size="14" font-weight="700" fill="#5c1f3c" letter-spacing="3">AUDI</text>
+                <text y="14" font-size="10" font-style="italic" fill="#a8821a" letter-spacing="2">— Q5 —</text>
+              </g>
+            </g>
+
+            <!-- Decorative sparkles -->
+            <g fill="#d4af37" opacity="0.75">
+              <path d="M 100 220 L 103 227 L 110 230 L 103 233 L 100 240 L 97 233 L 90 230 L 97 227 Z"/>
+              <path d="M 905 235 L 908 240 L 913 242 L 908 244 L 905 250 L 902 244 L 897 242 L 902 240 Z"/>
+              <path d="M 850 640 L 853 647 L 860 650 L 853 653 L 850 660 L 847 653 L 840 650 L 847 647 Z"/>
+              <path d="M 130 650 L 133 657 L 140 660 L 133 663 L 130 670 L 127 663 L 120 660 L 127 657 Z"/>
+              <circle cx="200" cy="700" r="3"/>
+              <circle cx="400" cy="690" r="2"/>
+              <circle cx="600" cy="700" r="3"/>
+              <circle cx="800" cy="690" r="2"/>
+              <circle cx="60"  cy="400" r="2"/>
+              <circle cx="950" cy="400" r="2"/>
+              <circle cx="50"  cy="250" r="2"/>
+              <circle cx="950" cy="270" r="2"/>
+            </g>
+
+            <!-- Bottom italic flourish -->
+            <g>
+              <line x1="220" y1="720" x2="380" y2="720" stroke="#d4af37" stroke-width="1"/>
+              <line x1="620" y1="720" x2="780" y2="720" stroke="#d4af37" stroke-width="1"/>
+              <text x="500" y="725" text-anchor="middle" font-family="Playfair Display, serif" font-style="italic" font-size="14" fill="#a8821a" letter-spacing="3">— for the woman who deserves it all —</text>
+            </g>
+          </svg>
+        </div>
+        <div class="gift-caption-strip">
+          <div class="gift-label">A luxury 5-seat SUV!</div>
+          <div class="gift-sublabel">— Three exquisite options —</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-continue" id="btn-continue-2">Continue to Gift Three →</button>
+  </section>
+
+  <!-- ============ SCREEN 3.5: GIFT 3 — CURTAIN REVEAL ============ -->
+  <section id="screen-gift-3" class="screen gift-screen">
+    <p class="label-tiny gift-counter">Gift Three of Four</p>
+    <h2 class="display-vibes gift-title">The Grand Finale</h2>
+    <p class="gift-instruction">Pull the curtains apart&hellip;</p>
+
+    <div class="reveal-stage curtain-stage" id="curtain-stage">
+      <!-- The reward beneath the curtains -->
+      <div class="reward">
+        <div class="photo-illustration">
+          <svg viewBox="0 0 1000 800" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" aria-label="A polar bear and a walrus dueling with swords beneath the aurora borealis">
+            <defs>
+              <linearGradient id="skyG" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%"   stop-color="#0a1838"/>
+                <stop offset="55%"  stop-color="#1e3a6c"/>
+                <stop offset="100%" stop-color="#3a6a9a"/>
+              </linearGradient>
+              <linearGradient id="aurora1" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%"   stop-color="#a8e6cf" stop-opacity="0"/>
+                <stop offset="50%"  stop-color="#88d8a8" stop-opacity="0.75"/>
+                <stop offset="100%" stop-color="#ccaaff" stop-opacity="0"/>
+              </linearGradient>
+              <linearGradient id="aurora2" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%"   stop-color="#ccaaff" stop-opacity="0"/>
+                <stop offset="50%"  stop-color="#ff88cc" stop-opacity="0.55"/>
+                <stop offset="100%" stop-color="#88aaff" stop-opacity="0"/>
+              </linearGradient>
+              <linearGradient id="bladeG" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%"  stop-color="#888"/>
+                <stop offset="40%" stop-color="#fff"/>
+                <stop offset="60%" stop-color="#fff"/>
+                <stop offset="100%" stop-color="#666"/>
+              </linearGradient>
+              <linearGradient id="hiltG" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%"   stop-color="#f4e4a1"/>
+                <stop offset="50%"  stop-color="#d4af37"/>
+                <stop offset="100%" stop-color="#a8821a"/>
+              </linearGradient>
+              <linearGradient id="walrusG" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%"   stop-color="#9a6f4a"/>
+                <stop offset="100%" stop-color="#5c3a1f"/>
+              </linearGradient>
+              <linearGradient id="bearG" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%"   stop-color="#ffffff"/>
+                <stop offset="100%" stop-color="#d8e4ee"/>
+              </linearGradient>
+              <linearGradient id="icebergG" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%"   stop-color="#ddebf5"/>
+                <stop offset="100%" stop-color="#78a8c8"/>
+              </linearGradient>
+              <linearGradient id="snowG" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%"   stop-color="#f8fbff"/>
+                <stop offset="100%" stop-color="#aac4d8"/>
+              </linearGradient>
+            </defs>
+
+            <!-- ===== BACKGROUND ===== -->
+            <rect width="1000" height="800" fill="url(#skyG)"/>
+
+            <!-- Aurora borealis ribbons -->
+            <path d="M -50 200 Q 200 120 500 220 T 1050 180 L 1050 250 Q 800 200 500 290 T -50 270 Z" fill="url(#aurora1)" opacity="0.8"/>
+            <path d="M -50 280 Q 300 200 600 320 T 1050 280 L 1050 340 Q 750 290 500 380 T -50 350 Z" fill="url(#aurora2)" opacity="0.6"/>
+            <path d="M -50 380 Q 250 320 550 400 T 1050 380 L 1050 430 Q 700 380 450 450 T -50 430 Z" fill="url(#aurora1)" opacity="0.35"/>
+
+            <!-- Stars -->
+            <g fill="white">
+              <circle cx="80"  cy="60"  r="1.5"/>
+              <circle cx="180" cy="40"  r="2"/>
+              <circle cx="280" cy="80"  r="1.5"/>
+              <circle cx="400" cy="50"  r="2.5"/>
+              <circle cx="520" cy="40"  r="1.5"/>
+              <circle cx="650" cy="70"  r="2"/>
+              <circle cx="780" cy="50"  r="1.5"/>
+              <circle cx="880" cy="80"  r="2"/>
+              <circle cx="950" cy="40"  r="2.5"/>
+              <circle cx="120" cy="120" r="1"/>
+              <circle cx="350" cy="150" r="1.5"/>
+              <circle cx="700" cy="130" r="1"/>
+              <circle cx="850" cy="160" r="1.5"/>
+            </g>
+
+            <!-- Distant icebergs -->
+            <polygon points="50,620 130,500 210,620"  fill="url(#icebergG)" opacity="0.75"/>
+            <polygon points="180,620 280,460 380,620" fill="url(#icebergG)" opacity="0.75"/>
+            <polygon points="600,620 700,480 800,620" fill="url(#icebergG)" opacity="0.75"/>
+            <polygon points="780,620 880,500 980,620" fill="url(#icebergG)" opacity="0.75"/>
+
+            <!-- Snow ground -->
+            <path d="M 0 620 Q 200 600 400 625 Q 600 615 800 625 Q 900 620 1000 615 L 1000 800 L 0 800 Z" fill="url(#snowG)"/>
+            <g stroke="#cce0ee" stroke-width="2" fill="none" opacity="0.6">
+              <path d="M 100 680 Q 200 670 300 680"/>
+              <path d="M 500 720 Q 600 710 700 720"/>
+              <path d="M 200 760 Q 350 750 500 760"/>
+            </g>
+
+            <!-- ===== POLAR BEAR (left fighter) ===== -->
+            <g id="bear">
+              <ellipse cx="300" cy="640" rx="115" ry="12" fill="rgba(0,0,0,0.35)"/>
+              <!-- Legs + paws -->
+              <ellipse cx="270" cy="595" rx="28" ry="50" fill="url(#bearG)" stroke="#a8b8c8" stroke-width="2.5"/>
+              <ellipse cx="335" cy="595" rx="28" ry="50" fill="url(#bearG)" stroke="#a8b8c8" stroke-width="2.5"/>
+              <ellipse cx="270" cy="635" rx="32" ry="14" fill="url(#bearG)" stroke="#a8b8c8" stroke-width="2.5"/>
+              <ellipse cx="335" cy="635" rx="32" ry="14" fill="url(#bearG)" stroke="#a8b8c8" stroke-width="2.5"/>
+              <g stroke="#1a1a1a" stroke-width="2" stroke-linecap="round">
+                <line x1="262" y1="638" x2="258" y2="650"/>
+                <line x1="270" y1="640" x2="270" y2="652"/>
+                <line x1="278" y1="638" x2="282" y2="650"/>
+                <line x1="327" y1="638" x2="323" y2="650"/>
+                <line x1="335" y1="640" x2="335" y2="652"/>
+                <line x1="343" y1="638" x2="347" y2="650"/>
+              </g>
+              <!-- Body + belly -->
+              <ellipse cx="300" cy="490" rx="90" ry="100" fill="url(#bearG)" stroke="#a8b8c8" stroke-width="3"/>
+              <ellipse cx="300" cy="510" rx="55" ry="70" fill="#fff8ee"/>
+              <!-- Left arm hanging -->
+              <ellipse cx="220" cy="470" rx="22" ry="55" fill="url(#bearG)" stroke="#a8b8c8" stroke-width="2.5" transform="rotate(-12 220 470)"/>
+              <circle cx="208" cy="525" r="22" fill="url(#bearG)" stroke="#a8b8c8" stroke-width="2.5"/>
+              <!-- Right arm raised toward sword -->
+              <path d="M 380 440 Q 405 360 430 290" stroke="#a8b8c8" stroke-width="46" stroke-linecap="round" fill="none"/>
+              <path d="M 380 440 Q 405 360 430 290" stroke="white"   stroke-width="42" stroke-linecap="round" fill="none"/>
+              <circle cx="430" cy="290" r="24" fill="url(#bearG)" stroke="#a8b8c8" stroke-width="2.5"/>
+              <!-- Head -->
+              <circle cx="300" cy="360" r="62" fill="url(#bearG)" stroke="#a8b8c8" stroke-width="3"/>
+              <circle cx="258" cy="318" r="20" fill="url(#bearG)" stroke="#a8b8c8" stroke-width="2.5"/>
+              <circle cx="342" cy="318" r="20" fill="url(#bearG)" stroke="#a8b8c8" stroke-width="2.5"/>
+              <circle cx="258" cy="320" r="10" fill="#ffc4d0"/>
+              <circle cx="342" cy="320" r="10" fill="#ffc4d0"/>
+              <ellipse cx="300" cy="385" rx="34" ry="24" fill="#fff8ee"/>
+              <!-- Eyes / brows / nose -->
+              <circle cx="278" cy="355" r="7" fill="#1a1a1a"/>
+              <circle cx="322" cy="355" r="7" fill="#1a1a1a"/>
+              <circle cx="280" cy="353" r="2.5" fill="white"/>
+              <circle cx="324" cy="353" r="2.5" fill="white"/>
+              <path d="M 263 340 L 290 348" stroke="#1a1a1a" stroke-width="4.5" stroke-linecap="round"/>
+              <path d="M 337 340 L 310 348" stroke="#1a1a1a" stroke-width="4.5" stroke-linecap="round"/>
+              <ellipse cx="300" cy="375" rx="10" ry="7" fill="#1a1a1a"/>
+              <!-- Mouth roar -->
+              <path d="M 278 395 Q 300 422 322 395 Q 322 412 300 420 Q 278 412 278 395 Z" fill="#5c1f3c"/>
+              <polygon points="285,398 289,412 293,398" fill="white"/>
+              <polygon points="307,398 311,412 315,398" fill="white"/>
+            </g>
+
+            <!-- ===== WALRUS (right fighter) ===== -->
+            <g id="walrus">
+              <ellipse cx="700" cy="640" rx="135" ry="14" fill="rgba(0,0,0,0.35)"/>
+              <!-- Tail haunch -->
+              <ellipse cx="780" cy="600" rx="60" ry="40" fill="url(#walrusG)" stroke="#3a2010" stroke-width="2.5"/>
+              <!-- Body -->
+              <ellipse cx="700" cy="510" rx="125" ry="120" fill="url(#walrusG)" stroke="#3a2010" stroke-width="3"/>
+              <ellipse cx="690" cy="530" rx="80" ry="90" fill="#b88857"/>
+              <!-- Left flipper resting -->
+              <ellipse cx="610" cy="600" rx="40" ry="22" fill="url(#walrusG)" stroke="#3a2010" stroke-width="2.5" transform="rotate(-20 610 600)"/>
+              <!-- Right flipper raised toward sword -->
+              <path d="M 615 460 Q 590 380 570 300" stroke="#3a2010" stroke-width="42" stroke-linecap="round" fill="none"/>
+              <path d="M 615 460 Q 590 380 570 300" stroke="#7a4f30" stroke-width="38" stroke-linecap="round" fill="none"/>
+              <ellipse cx="570" cy="300" rx="24" ry="20" fill="#7a4f30" stroke="#3a2010" stroke-width="2.5"/>
+              <!-- Head -->
+              <circle cx="640" cy="430" r="60" fill="url(#walrusG)" stroke="#3a2010" stroke-width="2.5"/>
+              <ellipse cx="615" cy="455" rx="42" ry="32" fill="#b88857" stroke="#3a2010" stroke-width="2"/>
+              <!-- Eyes / brows -->
+              <circle cx="635" cy="412" r="6" fill="#1a1a1a"/>
+              <circle cx="660" cy="418" r="6" fill="#1a1a1a"/>
+              <circle cx="637" cy="410" r="2" fill="white"/>
+              <circle cx="662" cy="416" r="2" fill="white"/>
+              <path d="M 622 400 L 642 406" stroke="#1a1a1a" stroke-width="4" stroke-linecap="round"/>
+              <path d="M 678 408 L 658 410" stroke="#1a1a1a" stroke-width="4" stroke-linecap="round"/>
+              <!-- Nostrils -->
+              <ellipse cx="608" cy="450" rx="3" ry="4" fill="#1a1a1a"/>
+              <ellipse cx="622" cy="450" rx="3" ry="4" fill="#1a1a1a"/>
+              <!-- Tusks -->
+              <path d="M 605 470 Q 595 495 590 515" stroke="#fff8ee" stroke-width="10" stroke-linecap="round" fill="none"/>
+              <path d="M 625 470 Q 632 495 637 515" stroke="#fff8ee" stroke-width="10" stroke-linecap="round" fill="none"/>
+              <!-- Whiskers -->
+              <g stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round">
+                <line x1="585" y1="465" x2="555" y2="460"/>
+                <line x1="585" y1="475" x2="555" y2="480"/>
+                <line x1="650" y1="465" x2="678" y2="465"/>
+                <line x1="650" y1="475" x2="675" y2="480"/>
+              </g>
+            </g>
+
+            <!-- ===== SWORDS (drawn over arms, crossing at ~500,230) ===== -->
+            <g id="bear-sword">
+              <polygon points="425,278 438,278 588,162 568,150" fill="url(#bladeG)" stroke="#666" stroke-width="1.5"/>
+              <rect x="395" y="280" width="70" height="11" rx="3" fill="url(#hiltG)" stroke="#a8821a" stroke-width="1.5" transform="rotate(-35 430 285)"/>
+              <rect x="425" y="290" width="12" height="22" rx="4" fill="#5c3a1f" transform="rotate(-35 430 300)"/>
+              <circle cx="447" cy="312" r="7" fill="url(#hiltG)" stroke="#a8821a" stroke-width="1.5"/>
+            </g>
+            <g id="walrus-sword">
+              <polygon points="562,278 575,278 432,162 412,150" fill="url(#bladeG)" stroke="#666" stroke-width="1.5"/>
+              <rect x="535" y="280" width="70" height="11" rx="3" fill="url(#hiltG)" stroke="#a8821a" stroke-width="1.5" transform="rotate(35 570 285)"/>
+              <rect x="563" y="290" width="12" height="22" rx="4" fill="#5c3a1f" transform="rotate(35 570 300)"/>
+              <circle cx="553" cy="312" r="7" fill="url(#hiltG)" stroke="#a8821a" stroke-width="1.5"/>
+            </g>
+
+            <!-- Impact starburst at clash point -->
+            <g transform="translate(500, 230)">
+              <g fill="#ffeb3b" stroke="#ff9800" stroke-width="2">
+                <polygon points="0,-58 8,-15 -8,-15"/>
+                <polygon points="0,58 -8,15 8,15"/>
+                <polygon points="-58,0 -15,-8 -15,8"/>
+                <polygon points="58,0 15,8 15,-8"/>
+                <polygon points="-41,-41 -10,-12 -12,-10"/>
+                <polygon points="41,41 12,10 10,12"/>
+                <polygon points="-41,41 -12,10 -10,12"/>
+                <polygon points="41,-41 10,-12 12,-10"/>
+              </g>
+              <polygon points="0,-28 7,-7 28,0 7,7 0,28 -7,7 -28,0 -7,-7" fill="#fff" stroke="#ff9800" stroke-width="2"/>
+            </g>
+
+            <!-- Comic-book CLANG! -->
+            <g transform="translate(680, 130) rotate(-12)">
+              <text text-anchor="middle" font-family="Playfair Display, Georgia, serif" font-weight="900" font-size="44" fill="#ff9800" stroke="#5c1f3c" stroke-width="3" paint-order="stroke">CLANG!</text>
+            </g>
+
+            <!-- Falling snowflakes (foreground sparkle) -->
+            <g fill="white" opacity="0.85">
+              <circle cx="100" cy="100" r="3"/>
+              <circle cx="200" cy="280" r="2"/>
+              <circle cx="450" cy="120" r="3"/>
+              <circle cx="600" cy="200" r="2"/>
+              <circle cx="850" cy="320" r="3"/>
+              <circle cx="900" cy="180" r="2"/>
+              <circle cx="50"  cy="450" r="2.5"/>
+              <circle cx="940" cy="500" r="3"/>
+              <circle cx="170" cy="380" r="2"/>
+              <circle cx="800" cy="100" r="2.5"/>
+            </g>
+            <g fill="white" opacity="0.7" font-family="serif">
+              <text x="120" y="220" font-size="22">❅</text>
+              <text x="360" y="200" font-size="24">❄</text>
+              <text x="660" y="380" font-size="18">❄</text>
+              <text x="820" y="240" font-size="20">❅</text>
+            </g>
+
+            <!-- Decorative gold border -->
+            <rect x="20" y="20" width="960" height="760" fill="none" stroke="#d4af37" stroke-width="2" stroke-dasharray="2 8" rx="12"/>
+            <rect x="32" y="32" width="936" height="736" fill="none" stroke="#d4af37" stroke-width="0.5" rx="8"/>
+
+            <!-- Top label -->
+            <g>
+              <line x1="280" y1="62" x2="430" y2="62" stroke="#d4af37" stroke-width="1"/>
+              <line x1="570" y1="62" x2="720" y2="62" stroke="#d4af37" stroke-width="1"/>
+              <text x="500" y="68" text-anchor="middle" font-family="Playfair Display, Georgia, serif" font-style="italic" font-size="18" fill="#f4e4a1" letter-spacing="6">A SCANDINAVIAN SAGA</text>
+            </g>
+          </svg>
+        </div>
+        <div class="gift-caption-strip">
+          <div class="gift-label">A Trip to Scandinavia!!!</div>
+          <div class="gift-sublabel">— Travel-agented &amp; all-inclusive —</div>
+        </div>
+      </div>
+
+      <!-- Theatre curtains (sit on top, slide apart on click) -->
+      <div class="curtain-rod"></div>
+      <div class="curtain left"></div>
+      <div class="curtain right"></div>
+      <div class="curtain-hint" id="curtain-hint">
+        <div class="icon">🎭</div>
+        <div class="text">Tap to part the curtains</div>
+      </div>
+    </div>
+
+    <button class="btn-continue" id="btn-continue-3">Continue to the Grand Prize →</button>
+  </section>
+
+  <!-- ============ SCREEN 3.75: GIFT 4 — PRESS-AND-HOLD GRAND PRIZE ============ -->
+  <section id="screen-gift-4" class="screen gift-screen">
+    <div class="grand-prize-banner">★ ☆ ★ &nbsp; The Grand Prize &nbsp; ★ ☆ ★</div>
+    <p class="label-tiny gift-counter">Gift Four of Four</p>
+    <h2 class="display-vibes gift-title gift4-title">Save the Best for Last</h2>
+    <p class="drumroll">drumroll please<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></p>
+    <p class="gift-instruction">Press &amp; HOLD the button to charge it up&hellip;</p>
+
+    <div class="reveal-stage charge-stage" id="charge-stage">
+      <!-- The reward beneath the charge button -->
+      <div class="reward">
+        <div class="photo-illustration">
+          <svg viewBox="0 0 1000 800" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" aria-label="Taco Bell celebration sign">
+            <defs>
+              <linearGradient id="tbBg" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%"   stop-color="#9c2c8e"/>
+                <stop offset="55%"  stop-color="#702082"/>
+                <stop offset="100%" stop-color="#3d1352"/>
+              </linearGradient>
+              <linearGradient id="bellG" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%"   stop-color="#fff3a0"/>
+                <stop offset="50%"  stop-color="#ffc72c"/>
+                <stop offset="100%" stop-color="#c89010"/>
+              </linearGradient>
+              <linearGradient id="bellShine" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%"   stop-color="rgba(255,255,255,0.65)"/>
+                <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+              </linearGradient>
+              <radialGradient id="spotlight" cx="50%" cy="55%" r="50%">
+                <stop offset="0%"   stop-color="rgba(255, 220, 100, 0.4)"/>
+                <stop offset="100%" stop-color="rgba(255, 220, 100, 0)"/>
+              </radialGradient>
+            </defs>
+
+            <!-- Background -->
+            <rect width="1000" height="800" fill="url(#tbBg)"/>
+
+            <!-- Spotlight glow center -->
+            <ellipse cx="500" cy="450" rx="380" ry="320" fill="url(#spotlight)"/>
+
+            <!-- Confetti specks scattered behind -->
+            <g>
+              <rect x="80"  y="120" width="14" height="6" fill="#ffc72c" transform="rotate(20 87 123)"/>
+              <rect x="200" y="80"  width="12" height="5" fill="#e4007c" transform="rotate(-30 206 82)"/>
+              <rect x="780" y="100" width="14" height="6" fill="#ffc72c" transform="rotate(40 787 103)"/>
+              <rect x="900" y="160" width="12" height="5" fill="#e4007c" transform="rotate(-15 906 162)"/>
+              <rect x="60"  y="350" width="14" height="6" fill="#ff88d6" transform="rotate(60 67 353)"/>
+              <rect x="940" y="380" width="12" height="5" fill="#88e6ff" transform="rotate(-50 946 382)"/>
+              <rect x="120" y="600" width="14" height="6" fill="#ffc72c" transform="rotate(20 127 603)"/>
+              <rect x="850" y="640" width="12" height="5" fill="#e4007c" transform="rotate(-30 856 642)"/>
+              <rect x="500" y="60"  width="14" height="6" fill="#88e6ff" transform="rotate(0 507 63)"/>
+              <rect x="380" y="700" width="14" height="6" fill="#ffc72c" transform="rotate(-15 387 703)"/>
+            </g>
+
+            <!-- Stars scattered -->
+            <g fill="#fff3a0" opacity="0.9">
+              <polygon points="150,200 156,218 174,218 159,228 165,246 150,236 135,246 141,228 126,218 144,218"/>
+              <polygon points="850,220 856,238 874,238 859,248 865,266 850,256 835,266 841,248 826,238 844,238"/>
+              <polygon points="100,500 105,512 117,512 107,520 111,532 100,524 89,532 93,520 83,512 95,512"/>
+              <polygon points="900,520 905,532 917,532 907,540 911,552 900,544 889,552 893,540 883,532 895,532"/>
+              <polygon points="500,140 506,158 524,158 509,168 515,186 500,176 485,186 491,168 476,158 494,158"/>
+            </g>
+
+            <!-- Top "TACO BELL" text — block-letter, festive -->
+            <text x="500" y="220" text-anchor="middle"
+                  font-family="'Playfair Display', Georgia, serif"
+                  font-weight="900" font-size="108"
+                  fill="#fff" stroke="#ffc72c" stroke-width="6"
+                  paint-order="stroke" letter-spacing="6">TACO BELL</text>
+
+            <!-- Bell graphic centered below the text -->
+            <g transform="translate(500, 470)">
+              <!-- Bell strap loop on top -->
+              <path d="M -22 -132 Q -22 -150 0 -150 Q 22 -150 22 -132" fill="none" stroke="#a8821a" stroke-width="6" stroke-linecap="round"/>
+              <ellipse cx="0" cy="-130" rx="24" ry="9" fill="#c89010" stroke="#a8821a" stroke-width="2"/>
+              <!-- Bell body -->
+              <path d="M -100 -85 Q -120 -75 -120 -10 Q -120 55 -90 90 L 90 90 Q 120 55 120 -10 Q 120 -75 100 -85 Q 80 -110 0 -110 Q -80 -110 -100 -85 Z"
+                    fill="url(#bellG)" stroke="#a8821a" stroke-width="5"/>
+              <!-- Bell shine highlight -->
+              <path d="M -75 -70 Q -90 -55 -90 -10 Q -90 30 -75 60" fill="url(#bellShine)" opacity="0.6" stroke="none"/>
+              <!-- Bell rim -->
+              <ellipse cx="0" cy="92" rx="100" ry="14" fill="#c89010" stroke="#a8821a" stroke-width="3"/>
+              <!-- Clapper -->
+              <line x1="0" y1="92" x2="0" y2="118" stroke="#a8821a" stroke-width="4"/>
+              <circle cx="0" cy="125" r="14" fill="url(#bellG)" stroke="#a8821a" stroke-width="3"/>
+              <!-- Sparkle on bell -->
+              <polygon points="-50,-50 -45,-38 -33,-33 -45,-28 -50,-16 -55,-28 -67,-33 -55,-38" fill="white" opacity="0.85"/>
+            </g>
+
+            <!-- Five-star rating beneath bell -->
+            <g transform="translate(500, 660)" fill="#ffc72c" stroke="#a8821a" stroke-width="1.5">
+              <polygon points="-140,0 -132,18 -112,18 -128,30 -120,50 -140,38 -160,50 -152,30 -168,18 -148,18"/>
+              <polygon points="-70,0  -62,18  -42,18  -58,30  -50,50  -70,38  -90,50  -82,30  -98,18  -78,18"/>
+              <polygon points="0,0    8,18    28,18   12,30   20,50   0,38    -20,50  -12,30  -28,18  -8,18"/>
+              <polygon points="70,0   78,18   98,18   82,30   90,50   70,38   50,50   58,30   42,18   62,18"/>
+              <polygon points="140,0  148,18  168,18  152,30  160,50  140,38  120,50  128,30  112,18  132,18"/>
+            </g>
+
+            <!-- ¡FIESTA! script flourish at the bottom -->
+            <text x="500" y="755" text-anchor="middle"
+                  font-family="'Italianno', cursive" font-size="64"
+                  fill="#ffc72c" stroke="#5d1872" stroke-width="2" paint-order="stroke">¡fiesta time!</text>
+
+            <!-- Decorative gold dotted border -->
+            <rect x="20" y="20" width="960" height="760" fill="none" stroke="#ffc72c" stroke-width="2" stroke-dasharray="2 8" rx="12"/>
+            <rect x="32" y="32" width="936" height="736" fill="none" stroke="#ffc72c" stroke-width="0.5" rx="8"/>
+          </svg>
+        </div>
+        <div class="gift-caption-strip">
+          <div class="gift-label">Dinner at Taco Bell — on me!</div>
+          <div class="gift-sublabel">— All-expenses-paid · date &amp; time of your choice!!!! —</div>
+        </div>
+      </div>
+
+      <!-- The press-and-hold button overlay -->
+      <div class="charge-button-wrap" id="charge-wrap">
+        <div class="charge-instruction">— Press &amp; hold —</div>
+
+        <svg class="charge-ring" viewBox="0 0 240 240">
+          <defs>
+            <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%"   stop-color="#f4e4a1"/>
+              <stop offset="50%"  stop-color="#ffc72c"/>
+              <stop offset="100%" stop-color="#ff88cc"/>
+            </linearGradient>
+          </defs>
+          <circle class="ring-bg"   cx="120" cy="120" r="110"/>
+          <circle class="ring-fill" cx="120" cy="120" r="110" id="charge-ring-progress"
+                  stroke-dasharray="691.15" stroke-dashoffset="691.15"/>
+        </svg>
+
+        <button class="charge-button" id="charge-button">
+          <span id="charge-text">HOLD ME</span>
+        </button>
+      </div>
+    </div>
+
+    <button class="btn-continue" id="btn-continue-4">→ The Final Surprise →</button>
+  </section>
+
+  <!-- ============ SCREEN 4: FINALE ============ -->
+  <section id="screen-finale" class="screen">
+    <div class="ornament-line">
+      <span class="line"></span>
+      <span class="label-tiny">With all my love</span>
+      <span class="line"></span>
+    </div>
+
+    <h1 class="display-script finale-title">
+      We Love You,
+      <span style="display:block; font-family:'Great Vibes', cursive; color: var(--rose-deep); margin-top: -20px;">Mama</span>
+    </h1>
+
+    <p class="finale-sub">
+      <span class="heart-big">❤</span>
+      &nbsp;Thank you for everything.&nbsp;
+      <span class="heart-big">❤</span>
+    </p>
+
+    <p style="margin-top: 28px; font-family: 'Italianno', cursive; font-size: clamp(38px, 5vw, 56px); color: var(--rose-dark); text-align: center; line-height: 1; text-shadow: 1px 2px 0 var(--gold-light);">
+      — from Jeff, Brooke, Evan &amp; Millie —
+    </p>
+
+    <button class="btn-replay" id="btn-replay">Play it again</button>
+  </section>
+
+</main>
+
+<!-- Confetti library — works offline once cached, lightweight (~10KB) -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+<script>
+/* =========================================================
+   FLOATING BACKGROUND DECORATIONS
+   ========================================================= */
+const decorations = document.getElementById('decorations');
+
+const petalSVG = `
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 2 C6 6, 4 14, 12 22 C20 14, 18 6, 12 2 Z"
+          fill="rgba(212, 113, 156, 0.85)"
+          stroke="rgba(168, 73, 104, 0.6)" stroke-width="0.5"/>
+    <path d="M12 2 Q10 8, 12 22" stroke="rgba(168, 73, 104, 0.5)" stroke-width="0.7" fill="none"/>
+  </svg>`;
+
+const sparkleSVG = `
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 0 L14 10 L24 12 L14 14 L12 24 L10 14 L0 12 L10 10 Z"
+          fill="currentColor" />
+  </svg>`;
+
+const heartSVG = `
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 21 C12 21, 2 14, 2 8 C2 5, 5 3, 8 3 C10 3, 11 4, 12 6 C13 4, 14 3, 16 3 C19 3, 22 5, 22 8 C22 14, 12 21, 12 21 Z"
+          fill="currentColor" />
+  </svg>`;
+
+function spawnDecoration(kind) {
+  const el = document.createElement('div');
+  el.className = kind;
+  if (kind === 'petal')   el.innerHTML = petalSVG;
+  if (kind === 'sparkle') el.innerHTML = sparkleSVG;
+  if (kind === 'heart')   el.innerHTML = heartSVG;
+
+  const startX = Math.random() * 100; // vw
+  const drift  = (Math.random() - 0.5) * 200; // px sideways
+  const dur    = 8 + Math.random() * 10; // seconds
+  const size   = kind === 'sparkle'
+    ? 8 + Math.random() * 14
+    : 18 + Math.random() * 24;
+
+  el.style.left = startX + 'vw';
+  el.style.width = size + 'px';
+  el.style.height = size + 'px';
+  el.style.animationDuration = dur + 's';
+  el.style.setProperty('--drift', drift + 'px');
+
+  decorations.appendChild(el);
+  setTimeout(() => el.remove(), dur * 1000 + 500);
+}
+
+// Continuous background spawn — the maximalist part
+setInterval(() => spawnDecoration('petal'),   600);
+setInterval(() => spawnDecoration('sparkle'), 350);
+setInterval(() => spawnDecoration('heart'),   1400);
+
+/* =========================================================
+   SCREEN NAVIGATION
+   ========================================================= */
+const screens = {
+  welcome:  document.getElementById('screen-welcome'),
+  gift1:    document.getElementById('screen-gift-1'),
+  gift2:    document.getElementById('screen-gift-2'),
+  gift3:    document.getElementById('screen-gift-3'),
+  gift4:    document.getElementById('screen-gift-4'),
+  finale:   document.getElementById('screen-finale'),
+};
+
+function showScreen(name) {
+  Object.values(screens).forEach(s => s.classList.remove('active'));
+  screens[name].classList.add('active');
+  // Scroll the new screen back to top
+  screens[name].scrollTop = 0;
+}
+
+/* =========================================================
+   CONFETTI HELPERS — varied bursts to keep it ridiculous
+   ========================================================= */
+const confettiColors = ['#d4719c','#a84968','#d4af37','#f4e4a1','#ffe4e8','#fdf6ec','#7a2f4c'];
+
+function burstConfetti() {
+  if (!window.confetti) return;
+  // A double-cannon burst from the bottom corners
+  const end = Date.now() + 1200;
+  (function frame() {
+    confetti({
+      particleCount: 5,
+      angle: 60,
+      spread: 70,
+      origin: { x: 0, y: 0.9 },
+      colors: confettiColors,
+      shapes: ['square', 'circle'],
+      scalar: 1.1,
+    });
+    confetti({
+      particleCount: 5,
+      angle: 120,
+      spread: 70,
+      origin: { x: 1, y: 0.9 },
+      colors: confettiColors,
+      shapes: ['square', 'circle'],
+      scalar: 1.1,
+    });
+    if (Date.now() < end) requestAnimationFrame(frame);
+  })();
+}
+
+function bigBurst() {
+  if (!window.confetti) return;
+  // Center cannon — huge
+  confetti({
+    particleCount: 200,
+    spread: 120,
+    startVelocity: 55,
+    origin: { x: 0.5, y: 0.6 },
+    colors: confettiColors,
+    scalar: 1.3,
+  });
+  // Side cannons follow
+  setTimeout(() => burstConfetti(), 250);
+}
+
+function continuousConfetti(durationMs = 8000) {
+  if (!window.confetti) return;
+  const end = Date.now() + durationMs;
+  (function frame() {
+    confetti({
+      particleCount: 4,
+      angle: 60 + Math.random() * 60,
+      spread: 80,
+      origin: { x: Math.random(), y: Math.random() * 0.3 },
+      colors: confettiColors,
+      shapes: ['square','circle'],
+      scalar: 0.9 + Math.random() * 0.6,
+    });
+    if (Date.now() < end) setTimeout(frame, 120);
+  })();
+}
+
+/* =========================================================
+   BUTTON HANDLERS
+   ========================================================= */
+document.getElementById('btn-begin').addEventListener('click', () => {
+  burstConfetti();
+  showScreen('gift1');
+});
+
+document.getElementById('btn-continue-1').addEventListener('click', () => {
+  burstConfetti();
+  showScreen('gift2');
+});
+
+document.getElementById('btn-continue-2').addEventListener('click', () => {
+  burstConfetti();
+  showScreen('gift3');
+});
+
+document.getElementById('btn-continue-3').addEventListener('click', () => {
+  burstConfetti();
+  showScreen('gift4');
+});
+
+document.getElementById('btn-continue-4').addEventListener('click', () => {
+  showScreen('finale');
+  bigBurst();
+  setTimeout(() => continuousConfetti(12000), 600);
+});
+
+document.getElementById('btn-replay').addEventListener('click', () => {
+  // Reset state and replay
+  resetScratchCard();
+  resetPresent();
+  resetCurtains();
+  resetCharge();
+  showScreen('welcome');
+});
+
+/* =========================================================
+   SCRATCH CARD LOGIC (Gift 1)
+   ========================================================= */
+const canvas = document.getElementById('scratch-canvas');
+const ctx    = canvas.getContext('2d');
+const stage  = document.getElementById('scratch-stage');
+const hint   = document.getElementById('scratch-hint');
+const btnContinue1 = document.getElementById('btn-continue-1');
+
+let scratching   = false;
+let scratchReady = false;
+let scratchDone  = false;
+
+function paintScratchSurface() {
+  const rect = stage.getBoundingClientRect();
+  const dpr  = window.devicePixelRatio || 1;
+  canvas.width  = rect.width  * dpr;
+  canvas.height = rect.height * dpr;
+  canvas.style.width  = rect.width  + 'px';
+  canvas.style.height = rect.height + 'px';
+  ctx.scale(dpr, dpr);
+
+  // Gold gradient surface
+  const grad = ctx.createLinearGradient(0, 0, rect.width, rect.height);
+  grad.addColorStop(0,   '#f4e4a1');
+  grad.addColorStop(0.5, '#d4af37');
+  grad.addColorStop(1,   '#a8821a');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, rect.width, rect.height);
+
+  // Glittery overlay specks
+  for (let i = 0; i < 80; i++) {
+    ctx.fillStyle = `rgba(255,255,255,${0.2 + Math.random() * 0.5})`;
+    const r = 1 + Math.random() * 2;
+    ctx.beginPath();
+    ctx.arc(Math.random() * rect.width, Math.random() * rect.height, r, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  // Decorative gold border inside the canvas
+  ctx.strokeStyle = 'rgba(122, 47, 76, 0.3)';
+  ctx.lineWidth = 4;
+  ctx.strokeRect(8, 8, rect.width - 16, rect.height - 16);
+
+  // Set composite for erasing
+  ctx.globalCompositeOperation = 'destination-out';
+
+  scratchReady = true;
+}
+
+function getPos(e) {
+  const rect = canvas.getBoundingClientRect();
+  if (e.touches && e.touches[0]) {
+    return { x: e.touches[0].clientX - rect.left, y: e.touches[0].clientY - rect.top };
+  }
+  return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+}
+
+function scratchAt(x, y) {
+  if (!scratchReady) return;
+  ctx.beginPath();
+  ctx.arc(x, y, 28, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+function checkScratchProgress() {
+  if (scratchDone) return;
+  // Sample a coarse grid of pixels and count erased
+  const w = canvas.width, h = canvas.height;
+  const sampleStep = 20;
+  let total = 0, erased = 0;
+  const data = ctx.getImageData(0, 0, w, h).data;
+  for (let y = 0; y < h; y += sampleStep) {
+    for (let x = 0; x < w; x += sampleStep) {
+      const idx = (y * w + x) * 4 + 3; // alpha channel
+      total++;
+      if (data[idx] < 30) erased++;
+    }
+  }
+  if (erased / total > 0.4) {
+    scratchDone = true;
+    canvas.classList.add('fading');
+    hint.classList.add('faded');
+    burstConfetti();
+    setTimeout(() => btnContinue1.classList.add('show'), 600);
+  }
+}
+
+function startScratch(e) {
+  e.preventDefault();
+  scratching = true;
+  hint.classList.add('faded');
+  const p = getPos(e);
+  scratchAt(p.x, p.y);
+}
+
+function moveScratch(e) {
+  if (!scratching) return;
+  e.preventDefault();
+  const p = getPos(e);
+  scratchAt(p.x, p.y);
+}
+
+function endScratch() {
+  if (!scratching) return;
+  scratching = false;
+  checkScratchProgress();
+}
+
+canvas.addEventListener('mousedown',  startScratch);
+canvas.addEventListener('mousemove',  moveScratch);
+canvas.addEventListener('mouseup',    endScratch);
+canvas.addEventListener('mouseleave', endScratch);
+canvas.addEventListener('touchstart', startScratch, { passive: false });
+canvas.addEventListener('touchmove',  moveScratch,  { passive: false });
+canvas.addEventListener('touchend',   endScratch);
+
+function resetScratchCard() {
+  scratching = false;
+  scratchReady = false;
+  scratchDone = false;
+  canvas.classList.remove('fading');
+  hint.classList.remove('faded');
+  btnContinue1.classList.remove('show');
+  // Repaint
+  setTimeout(paintScratchSurface, 50);
+}
+
+// Repaint scratch surface when its screen becomes visible
+const scratchObserver = new MutationObserver(() => {
+  if (screens.gift1.classList.contains('active') && !scratchReady && !scratchDone) {
+    setTimeout(paintScratchSurface, 100);
+  }
+});
+scratchObserver.observe(screens.gift1, { attributes: true, attributeFilter: ['class'] });
+
+// Also repaint on resize
+window.addEventListener('resize', () => {
+  if (screens.gift1.classList.contains('active') && !scratchDone) {
+    paintScratchSurface();
+  }
+});
+
+/* =========================================================
+   WRAPPED PRESENT LOGIC (Gift 2)
+   ========================================================= */
+const presentStage = document.getElementById('present-stage');
+const presentHint  = document.getElementById('present-hint');
+const gift2Card    = document.getElementById('gift2-card');
+const btnContinue2 = document.getElementById('btn-continue-2');
+
+function openPresent() {
+  if (presentStage.classList.contains('opened')) return;
+  presentStage.classList.add('opened');
+  presentHint.style.display = 'none';
+  bigBurst();
+  setTimeout(() => gift2Card.classList.add('show'), 1400);
+  setTimeout(() => btnContinue2.classList.add('show'), 2200);
+}
+
+presentStage.addEventListener('click', openPresent);
+
+function resetPresent() {
+  presentStage.classList.remove('opened');
+  presentHint.style.display = '';
+  gift2Card.classList.remove('show');
+  btnContinue2.classList.remove('show');
+}
+
+/* =========================================================
+   CURTAIN REVEAL LOGIC (Gift 3)
+   ========================================================= */
+const curtainStage = document.getElementById('curtain-stage');
+const curtainHint  = document.getElementById('curtain-hint');
+const btnContinue3 = document.getElementById('btn-continue-3');
+
+function openCurtains() {
+  if (curtainStage.classList.contains('opened')) return;
+  curtainStage.classList.add('opened');
+  curtainHint.classList.add('faded');
+  setTimeout(() => burstConfetti(), 400);
+  setTimeout(() => btnContinue3.classList.add('show'), 1500);
+}
+
+curtainStage.addEventListener('click', openCurtains);
+
+function resetCurtains() {
+  curtainStage.classList.remove('opened');
+  curtainHint.classList.remove('faded');
+  btnContinue3.classList.remove('show');
+}
+
+/* =========================================================
+   PRESS-AND-HOLD CHARGE LOGIC (Gift 4)
+   ========================================================= */
+const CHARGE_DURATION_MS = 2500;          // total hold time required
+const RING_R              = 110;
+const RING_CIRCUMFERENCE  = 2 * Math.PI * RING_R; // ~691.15 px
+
+const chargeStage   = document.getElementById('charge-stage');
+const chargeButton  = document.getElementById('charge-button');
+const chargeText    = document.getElementById('charge-text');
+const chargeRing    = document.getElementById('charge-ring-progress');
+const btnContinue4  = document.getElementById('btn-continue-4');
+
+let chargeProgress  = 0;       // 0..100
+let chargeRaf       = null;
+let chargeStartTime = 0;
+let chargeHolding   = false;
+let chargeExploded  = false;
+
+function tickCharge() {
+  if (!chargeHolding || chargeExploded) return;
+  const elapsed = performance.now() - chargeStartTime;
+  chargeProgress = Math.min(100, (elapsed / CHARGE_DURATION_MS) * 100);
+
+  // Update ring fill
+  const offset = RING_CIRCUMFERENCE * (1 - chargeProgress / 100);
+  chargeRing.style.strokeDashoffset = offset;
+
+  // Update button text by stage
+  if      (chargeProgress < 33)  chargeText.textContent = 'HOLD!';
+  else if (chargeProgress < 66)  chargeText.textContent = 'KEEP GOING!';
+  else if (chargeProgress < 100) chargeText.textContent = 'ALMOST!';
+
+  if (chargeProgress >= 100) {
+    triggerExplode();
+    return;
+  }
+  chargeRaf = requestAnimationFrame(tickCharge);
+}
+
+function startCharge(e) {
+  if (chargeExploded) return;
+  if (e) e.preventDefault();
+  chargeHolding = true;
+  chargeButton.classList.add('charging');
+  // Resume from current progress (lets the user pause and continue)
+  chargeStartTime = performance.now() - (chargeProgress / 100) * CHARGE_DURATION_MS;
+  if (chargeRaf) cancelAnimationFrame(chargeRaf);
+  chargeRaf = requestAnimationFrame(tickCharge);
+}
+
+function pauseCharge(e) {
+  if (e) e.preventDefault();
+  chargeHolding = false;
+  chargeButton.classList.remove('charging');
+  if (chargeRaf) cancelAnimationFrame(chargeRaf);
+  chargeRaf = null;
+  if (!chargeExploded && chargeProgress < 100 && chargeProgress > 0) {
+    chargeText.textContent = 'HOLD ME';
+  }
+}
+
+function flashScreen() {
+  const flash = document.createElement('div');
+  flash.className = 'screen-flash firing';
+  document.body.appendChild(flash);
+  setTimeout(() => flash.remove(), 800);
+}
+
+function triggerExplode() {
+  if (chargeExploded) return;
+  chargeExploded = true;
+  pauseCharge();
+  chargeText.textContent = '🎉';
+  flashScreen();
+  // After the flash, reveal everything with maximum fanfare
+  setTimeout(() => {
+    chargeStage.classList.add('exploded');
+    bigBurst();
+    setTimeout(() => continuousConfetti(8000), 200);
+    setTimeout(() => btnContinue4.classList.add('show'), 1800);
+  }, 120);
+}
+
+// Pointer events handle both mouse + touch in one go
+chargeButton.addEventListener('pointerdown',   startCharge);
+chargeButton.addEventListener('pointerup',     pauseCharge);
+chargeButton.addEventListener('pointerleave',  pauseCharge);
+chargeButton.addEventListener('pointercancel', pauseCharge);
+
+function resetCharge() {
+  chargeProgress  = 0;
+  chargeHolding   = false;
+  chargeExploded  = false;
+  if (chargeRaf) cancelAnimationFrame(chargeRaf);
+  chargeRaf = null;
+  chargeStage.classList.remove('exploded');
+  chargeButton.classList.remove('charging');
+  chargeRing.style.strokeDashoffset = RING_CIRCUMFERENCE;
+  chargeText.textContent = 'HOLD ME';
+  btnContinue4.classList.remove('show');
+}
+
+/* =========================================================
+   SILLY SOUND EFFECTS — synthesized via Web Audio API
+   No external files; everything lives in the page.
+   ========================================================= */
+let soundsEnabled = true;
+let audioCtx = null;
+
+function getAudioCtx() {
+  if (!soundsEnabled) return null;
+  if (!audioCtx) {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return null;
+    audioCtx = new AC();
+  }
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  return audioCtx;
+}
+
+// One short tone with optional pitch sweep
+function playTone({freq=440, dur=0.2, type='sine', vol=0.2, attack=0.005, sweep=0}) {
+  const ctx = getAudioCtx();
+  if (!ctx) return;
+  const t = ctx.currentTime;
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.type = type;
+  osc.frequency.setValueAtTime(freq, t);
+  if (sweep) osc.frequency.linearRampToValueAtTime(Math.max(20, freq + sweep), t + dur);
+  gain.gain.setValueAtTime(0, t);
+  gain.gain.linearRampToValueAtTime(vol, t + attack);
+  gain.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+  osc.connect(gain).connect(ctx.destination);
+  osc.start(t);
+  osc.stop(t + dur + 0.02);
+}
+
+// Short noise burst with optional bandpass filter
+function playNoise({dur=0.15, vol=0.3, filterType=null, filterFreq=1000, sweepFreq=null}) {
+  const ctx = getAudioCtx();
+  if (!ctx) return;
+  const t = ctx.currentTime;
+  const buf = ctx.createBuffer(1, Math.ceil(dur * ctx.sampleRate), ctx.sampleRate);
+  const data = buf.getChannelData(0);
+  for (let i = 0; i < data.length; i++) data[i] = (Math.random() - 0.5);
+  const src = ctx.createBufferSource();
+  src.buffer = buf;
+  let node = src;
+  if (filterType) {
+    const filt = ctx.createBiquadFilter();
+    filt.type = filterType;
+    filt.frequency.setValueAtTime(filterFreq, t);
+    if (sweepFreq) filt.frequency.exponentialRampToValueAtTime(sweepFreq, t + dur);
+    filt.Q.value = 4;
+    node.connect(filt);
+    node = filt;
+  }
+  const gain = ctx.createGain();
+  gain.gain.setValueAtTime(vol, t);
+  gain.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+  node.connect(gain).connect(ctx.destination);
+  src.start(t);
+}
+
+const sfx = {
+  fanfare() {
+    // Triumphant ascending major triad
+    playTone({freq: 392, dur: 0.18, type: 'square', vol: 0.14});
+    setTimeout(() => playTone({freq: 523, dur: 0.18, type: 'square', vol: 0.14}), 110);
+    setTimeout(() => playTone({freq: 659, dur: 0.45, type: 'square', vol: 0.16}), 230);
+    setTimeout(() => playTone({freq: 783, dur: 0.55, type: 'triangle', vol: 0.18}), 350);
+  },
+  scratch() {
+    // Quick squeaky scrape
+    playNoise({dur: 0.04, vol: 0.08, filterType: 'highpass', filterFreq: 2000});
+  },
+  tada() {
+    // Magical reveal chime
+    playTone({freq: 523, dur: 0.18, type: 'triangle', vol: 0.18});
+    setTimeout(() => playTone({freq: 659, dur: 0.18, type: 'triangle', vol: 0.18}), 110);
+    setTimeout(() => playTone({freq: 783, dur: 0.5,  type: 'triangle', vol: 0.22}), 230);
+  },
+  boing() {
+    // Cartoon spring boing — high to low sweep
+    playTone({freq: 880, dur: 0.35, type: 'sine', vol: 0.22, sweep: -780});
+  },
+  pop() {
+    // Quick low-to-high pop
+    playTone({freq: 180, dur: 0.06, type: 'square', vol: 0.25, sweep: 600});
+    setTimeout(() => playNoise({dur: 0.06, vol: 0.15, filterType: 'highpass', filterFreq: 3000}), 5);
+  },
+  whoosh() {
+    // Sweeping filtered noise — like a swoosh of fabric
+    playNoise({dur: 0.55, vol: 0.35, filterType: 'bandpass', filterFreq: 250, sweepFreq: 2200});
+  },
+  blip() {
+    // Quick UI blip
+    playTone({freq: 600, dur: 0.08, type: 'square', vol: 0.13, sweep: 250});
+  },
+  woop() {
+    // Friendly downward woop
+    playTone({freq: 700, dur: 0.18, type: 'sine', vol: 0.18, sweep: -350});
+  },
+  charging() {
+    // Sustained rising sawtooth — handle returned so we can stop early
+    const ctx = getAudioCtx();
+    if (!ctx) return null;
+    const t = ctx.currentTime;
+    const osc  = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(110, t);
+    osc.frequency.exponentialRampToValueAtTime(700, t + 2.6);
+    gain.gain.setValueAtTime(0.0001, t);
+    gain.gain.linearRampToValueAtTime(0.06, t + 0.05);
+    osc.connect(gain).connect(ctx.destination);
+    osc.start(t);
+    osc.stop(t + 3);
+    return { osc, gain, ctx };
+  },
+  explosion() {
+    // Big white-noise burst + low rumble
+    playNoise({dur: 0.55, vol: 0.45, filterType: 'lowpass', filterFreq: 900});
+    playTone({freq: 90,  dur: 0.55, type: 'sawtooth', vol: 0.30, sweep: -50});
+    setTimeout(() => playTone({freq: 60, dur: 0.5, type: 'sine', vol: 0.25, sweep: -30}), 80);
+  },
+  party() {
+    // Fast ascending arpeggio — jackpot feel
+    [523, 659, 783, 1047, 1319].forEach((f, i) =>
+      setTimeout(() => playTone({freq: f, dur: 0.18, type: 'triangle', vol: 0.16}), i * 70));
+  },
+  applause() {
+    // Bursty filtered noise — crowd clapping
+    playNoise({dur: 1.6, vol: 0.18, filterType: 'highpass', filterFreq: 1200});
+  },
+};
+
+// Charging sound is sustained — keep handle so we can fade it out on release
+let chargingHandle = null;
+function startChargingSound() {
+  if (chargingHandle) return;
+  chargingHandle = sfx.charging();
+}
+function stopChargingSound() {
+  if (!chargingHandle) return;
+  const { osc, gain, ctx } = chargingHandle;
+  try {
+    gain.gain.cancelScheduledValues(ctx.currentTime);
+    gain.gain.setTargetAtTime(0.0001, ctx.currentTime, 0.02);
+    setTimeout(() => { try { osc.stop(); } catch (e) {} }, 100);
+  } catch (e) {}
+  chargingHandle = null;
+}
+
+/* ===== WIRE-UP: attach sounds to every interaction ===== */
+document.getElementById('btn-begin').addEventListener('click', () => sfx.fanfare());
+document.getElementById('btn-continue-1').addEventListener('click', () => sfx.blip());
+document.getElementById('btn-continue-2').addEventListener('click', () => sfx.blip());
+document.getElementById('btn-continue-3').addEventListener('click', () => sfx.blip());
+document.getElementById('btn-continue-4').addEventListener('click', () => {
+  sfx.party();
+  setTimeout(() => sfx.applause(), 500);
+});
+document.getElementById('btn-replay').addEventListener('click', () => sfx.woop());
+
+// Present unwrap → boing then pop
+document.getElementById('present-stage').addEventListener('click', () => {
+  if (presentStage.classList.contains('opened')) return;  // only first click triggers
+  sfx.boing();
+  setTimeout(() => sfx.pop(), 650);
+});
+
+// Curtain part → whoosh
+document.getElementById('curtain-stage').addEventListener('click', () => {
+  if (curtainStage.classList.contains('opened')) return;
+  sfx.whoosh();
+});
+
+// Charge button hold → sustained rising tone (released on letup)
+chargeButton.addEventListener('pointerdown',   startChargingSound);
+chargeButton.addEventListener('pointerup',     stopChargingSound);
+chargeButton.addEventListener('pointerleave',  stopChargingSound);
+chargeButton.addEventListener('pointercancel', stopChargingSound);
+
+// Scratch sound — throttled while finger is down
+let lastScratchSound = 0;
+let scratchPressed = false;
+const sCanvas = document.getElementById('scratch-canvas');
+sCanvas.addEventListener('mousedown',   () => { scratchPressed = true;  });
+sCanvas.addEventListener('mouseup',     () => { scratchPressed = false; });
+sCanvas.addEventListener('mouseleave',  () => { scratchPressed = false; });
+sCanvas.addEventListener('touchstart',  () => { scratchPressed = true;  });
+sCanvas.addEventListener('touchend',    () => { scratchPressed = false; });
+sCanvas.addEventListener('touchcancel', () => { scratchPressed = false; });
+function maybeScratchSound() {
+  if (!scratchPressed) return;
+  const now = Date.now();
+  if (now - lastScratchSound < 80) return;
+  lastScratchSound = now;
+  sfx.scratch();
+}
+sCanvas.addEventListener('mousemove', maybeScratchSound);
+sCanvas.addEventListener('touchmove', maybeScratchSound);
+
+// Tada when scratch reveals (watch for .fading class being added)
+let lastFading = false;
+new MutationObserver(() => {
+  const nowFading = sCanvas.classList.contains('fading');
+  if (nowFading && !lastFading) sfx.tada();
+  lastFading = nowFading;
+}).observe(sCanvas, { attributes: true, attributeFilter: ['class'] });
+
+// Explosion when charge fires
+let lastExploded = false;
+new MutationObserver(() => {
+  const nowExploded = chargeStage.classList.contains('exploded');
+  if (nowExploded && !lastExploded) sfx.explosion();
+  lastExploded = nowExploded;
+}).observe(chargeStage, { attributes: true, attributeFilter: ['class'] });
+
+// Mute toggle
+const soundToggle = document.getElementById('sound-toggle');
+soundToggle.addEventListener('click', () => {
+  soundsEnabled = !soundsEnabled;
+  soundToggle.textContent = soundsEnabled ? '🔊' : '🔇';
+  soundToggle.setAttribute('aria-label', soundsEnabled ? 'Mute sounds' : 'Unmute sounds');
+  if (!soundsEnabled) stopChargingSound();
+});
+</script>
+
+</body>
+</html>
