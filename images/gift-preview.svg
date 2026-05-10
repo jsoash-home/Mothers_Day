@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" width="1200" height="1200">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#fff5e8"/>
+      <stop offset="50%"  stop-color="#ffe4e8"/>
+      <stop offset="100%" stop-color="#fbeede"/>
+    </linearGradient>
+    <linearGradient id="boxBottom" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"   stop-color="#d4719c"/>
+      <stop offset="100%" stop-color="#a84968"/>
+    </linearGradient>
+    <linearGradient id="boxLid" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"   stop-color="#a84968"/>
+      <stop offset="100%" stop-color="#7a2f4c"/>
+    </linearGradient>
+    <linearGradient id="ribbon" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#f4e4a1"/>
+      <stop offset="50%"  stop-color="#d4af37"/>
+      <stop offset="100%" stop-color="#a8821a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="1200" fill="url(#bg)"/>
+
+  <!-- Decorative gold dotted border -->
+  <rect x="40" y="40" width="1120" height="1120" fill="none" stroke="#d4af37" stroke-width="3" stroke-dasharray="3 12" rx="20"/>
+
+  <!-- "HAPPY MOTHER'S DAY" small caps header -->
+  <text x="600" y="160" text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif" font-size="38" font-style="italic"
+        fill="#a8821a" letter-spacing="10">HAPPY MOTHER'S DAY</text>
+
+  <!-- Big script title -->
+  <text x="600" y="320" text-anchor="middle"
+        font-family="'Snell Roundhand', 'Apple Chancery', 'Brush Script MT', cursive"
+        font-size="180" font-weight="700"
+        fill="#7a2f4c">For Mom</text>
+
+  <!-- Wrapped gift centered -->
+  <g transform="translate(600, 740)">
+    <!-- Soft shadow under the box -->
+    <ellipse cx="0" cy="240" rx="240" ry="20" fill="rgba(122, 47, 76, 0.25)"/>
+
+    <!-- Box bottom -->
+    <rect x="-220" y="-60" width="440" height="300" rx="10" fill="url(#boxBottom)"/>
+    <!-- Vertical ribbon down the front -->
+    <rect x="-35" y="-60" width="70" height="300" fill="url(#ribbon)"/>
+    <!-- Body highlight -->
+    <rect x="-220" y="-60" width="440" height="20" fill="rgba(255,255,255,0.15)"/>
+
+    <!-- Box lid -->
+    <rect x="-240" y="-130" width="480" height="80" rx="10" fill="url(#boxLid)"/>
+    <!-- Lid horizontal ribbon -->
+    <rect x="-35" y="-130" width="70" height="80" fill="url(#ribbon)"/>
+    <!-- Lid highlight -->
+    <rect x="-240" y="-130" width="480" height="10" fill="rgba(255,255,255,0.2)"/>
+
+    <!-- BIG GOLD BOW on top -->
+    <g transform="translate(0, -200)">
+      <!-- Left loop -->
+      <path d="M 0 40 Q -120 -20 -150 40 Q -120 100 0 40 Z"
+            fill="url(#ribbon)" stroke="#a8821a" stroke-width="4"/>
+      <!-- Right loop -->
+      <path d="M 0 40 Q 120 -20 150 40 Q 120 100 0 40 Z"
+            fill="url(#ribbon)" stroke="#a8821a" stroke-width="4"/>
+      <!-- Center knot -->
+      <ellipse cx="0" cy="40" rx="22" ry="34" fill="url(#ribbon)" stroke="#a8821a" stroke-width="4"/>
+      <!-- Highlights on bow -->
+      <path d="M -100 30 Q -60 18 -25 32" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="3" stroke-linecap="round"/>
+      <path d="M  25 32 Q  60 18 100 30" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="3" stroke-linecap="round"/>
+      <!-- Two ribbon tails dangling -->
+      <path d="M -10 70 Q -25 110 -45 130 L -25 140 Q -10 110 -5 75 Z"
+            fill="url(#ribbon)" stroke="#a8821a" stroke-width="3"/>
+      <path d="M  10 70 Q  25 110  45 130 L  25 140 Q  10 110   5 75 Z"
+            fill="url(#ribbon)" stroke="#a8821a" stroke-width="3"/>
+    </g>
+  </g>
+
+  <!-- Decorative sparkles around -->
+  <g fill="#d4af37">
+    <path d="M 180 420 L 192 446 L 218 452 L 192 458 L 180 484 L 168 458 L 142 452 L 168 446 Z"/>
+    <path d="M 1020 460 L 1032 486 L 1058 492 L 1032 498 L 1020 524 L 1008 498 L 982 492 L 1008 486 Z"/>
+    <path d="M 130 880 L 138 898 L 156 904 L 138 910 L 130 928 L 122 910 L 104 904 L 122 898 Z"/>
+    <path d="M 1070 920 L 1078 938 L 1096 944 L 1078 950 L 1070 968 L 1062 950 L 1044 944 L 1062 938 Z"/>
+    <circle cx="240" cy="600" r="6"/>
+    <circle cx="960" cy="640" r="6"/>
+    <circle cx="280" cy="280" r="5"/>
+    <circle cx="940" cy="240" r="5"/>
+  </g>
+
+  <!-- Signature line at the bottom -->
+  <text x="600" y="1090" text-anchor="middle"
+        font-family="'Snell Roundhand', 'Apple Chancery', 'Brush Script MT', cursive"
+        font-size="62" font-weight="700"
+        fill="#a84968">— from Jeff, Brooke, Evan &amp; Millie —</text>
+</svg>
